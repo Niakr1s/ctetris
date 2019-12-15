@@ -1,2 +1,6 @@
 # ctetris
-Simple console tetris, written in pure C with ncurses library
+Simple console tetris, written in pure C with ncurses library.
+
+
+[![Example video](https://asciinema.org/a/288297.svg)](https://asciinema.org/a/288297)
+*Note: there is some bug in asciicast with bottom and top rows of tetris' glass, in reality ctetris works correct.*
