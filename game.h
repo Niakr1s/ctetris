@@ -8,7 +8,7 @@
 
 static const int SECOND = 1000000LL;
 static const int GAME_DEFAULT_SPEED = SECOND;
-static const int GAME_SPEED_AMPLIFY_INTERVAL = SECOND * 1;
+static const int GAME_SPEED_AMPLIFY_INTERVAL = SECOND * 30;
 static const double GAME_SPEED_AMPLIFY_MULTIPLIER = 0.9;
 
 enum {
