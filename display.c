@@ -86,6 +86,7 @@ void addTitle(WINDOW* win, const char* str) {
 }
 
 void initInput() {
+  curs_set(0);
   noecho();
   keypad(stdscr, TRUE);
   nodelay(stdscr, TRUE);

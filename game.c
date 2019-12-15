@@ -64,18 +64,19 @@ void gameLoop(Game* game) {
           glassFigureMoveY(glass, -1);
           break;
         case (' '):
-          rotateRight(glass->figure);
+          glassFigureRotateN(glass, 1);
           break;
         case ('q'):
         case ('Q'):
           game->status = GAME_END;
           break;
       }
-      int cleared_rows = glassClearRows(glass);
-      if (cleared_rows) {
-        game->score += cleared_rows * 100;
-        printInfo(info_win, game->score);
-      }
+      printGlass(win, glass);
+    }
+    int cleared_rows = glassClearRows(glass);
+    if (cleared_rows) {
+      game->score += cleared_rows * 100;
+      printInfo(info_win, game->score);
       printGlass(win, glass);
     }
   }

@@ -82,6 +82,20 @@ void glassFigureMoveY(Glass* glass, int diff) {
   }
 }
 
+void glassFigureRotateN(Glass* glass, int angle) {
+  if (!glass->figure)
+    return;
+  rotateN(glass->figure, angle);
+  int border_left = figureLeft(glass->figure);
+  int border_right = figureRight(glass->figure);
+  if (border_left < 0) {
+    glassFigureMoveX(glass, -border_left);
+  }
+  if (border_right >= GLASS_WIDTH) {
+    glassFigureMoveX(glass, GLASS_WIDTH - border_right - 1);
+  }
+}
+
 void glassGlueFigure(Glass* glass) {
   if (!glass->figure) {
     return;

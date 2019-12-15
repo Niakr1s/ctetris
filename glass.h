@@ -28,6 +28,8 @@ void glassDeleteFigure(Glass* glass);
 void glassFigureMoveX(Glass* glass, int diff);
 void glassFigureMoveY(Glass* glass, int diff);
 
+void glassFigureRotateN(Glass* glass, int angle);
+
 void glassGlueFigure(Glass* glass);
 BOOL glassFigureIntersects(Glass* glass);
 
