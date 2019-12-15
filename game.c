@@ -24,6 +24,9 @@ void gameLoop(Game* game) {
   WINDOW* info_win = newInfoWin();
   printInfo(info_win, game->score);
 
+  WINDOW* next_figure_win = newNextFigureWin();
+  printFrame(next_figure_win);
+
   struct timeval speed_amplify_time, move_down_time, current_time;
   gettimeofday(&speed_amplify_time, 0);
   gettimeofday(&move_down_time, 0);

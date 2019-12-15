@@ -1,20 +1,19 @@
 #include "display.h"
 
 WINDOW* newGlassWin() {
-  int w = getmaxx(stdscr);
-  int y = 2;
-  int x = (w - GLASS_WIDTH) / 2;
-
-  WINDOW* res = newwin(GLASS_HEIGHT, GLASS_WIDTH, y, x);
+  WINDOW* res = newwin(GLASS_HEIGHT, GLASS_WIDTH, WINS_START_Y, WINS_START_X);
   return res;
 }
 
 WINDOW* newInfoWin() {
-  int w = getmaxx(stdscr);
-  int y = 2;
-  int width = 7 + 9;
+  WINDOW* res =
+      newwin(WIN_INFO_HEIGHT, WIN_INFO_WIDTH, WINS_START_Y, RIGHT_WINS_X);
+  return res;
+}
 
-  WINDOW* res = newwin(1, width, y, w - width - 5);
+WINDOW* newNextFigureWin() {
+  WINDOW* res = newwin(WIN_NEXT_FIGURE_HEIGHT, WIN_NEXT_FIGURE_WIDTH,
+                       WIN_NEXT_FIGURE_Y, RIGHT_WINS_X);
   return res;
 }
 
