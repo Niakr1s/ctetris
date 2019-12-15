@@ -69,6 +69,22 @@ Figure* makeFigure(int name) {
       fig->base_cells[3] = makePos(1, 0);
       fig->max_angle = 2;
       break;
+    case (FIGURE_G_RIGHT):
+      fig->name = FIGURE_G_RIGHT;
+      fig->base_cells[0] = makePos(-1, 1);
+      fig->base_cells[1] = makePos(-1, 0);
+      fig->base_cells[2] = makePos(0, 0);
+      fig->base_cells[3] = makePos(1, 0);
+      fig->max_angle = 4;
+      break;
+    case (FIGURE_G_LEFT):
+      fig->name = FIGURE_G_LEFT;
+      fig->base_cells[0] = makePos(-1, -1);
+      fig->base_cells[1] = makePos(-1, 0);
+      fig->base_cells[2] = makePos(0, 0);
+      fig->base_cells[3] = makePos(1, 0);
+      fig->max_angle = 4;
+      break;
     default:
       fig->name = FIGURE_MAX;
   }
