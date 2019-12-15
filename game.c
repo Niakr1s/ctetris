@@ -2,7 +2,7 @@
 
 #include "display.h"
 
-Game gameMake() {
+Game makeGame() {
   Game res;
   res.status = GAME_RUNNING;
   res.score = 0;

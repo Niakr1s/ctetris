@@ -9,7 +9,7 @@
 #include "pos.h"
 
 int main() {
-  Game game = gameMake();
+  Game game = makeGame();
   gameLoop(&game);
 
   return 0;

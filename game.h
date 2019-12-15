@@ -15,7 +15,7 @@ typedef struct Game {
   Glass glass;
 } Game;
 
-Game gameMake();
+Game makeGame();
 
 void gameLoop(Game* game);
 
