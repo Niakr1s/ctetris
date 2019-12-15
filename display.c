@@ -50,5 +50,5 @@ void printFrame(WINDOW* win) {
 void initInput() {
   noecho();
   keypad(stdscr, TRUE);
-  //  nodelay(stdscr, TRUE);
+  nodelay(stdscr, TRUE);
 }
