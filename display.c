@@ -1,5 +1,7 @@
 #include "display.h"
 
+#include <stdlib.h>
+
 WINDOW* newGlassWin() {
   WINDOW* res = newwin(GLASS_HEIGHT, GLASS_WIDTH, WINS_START_Y, WINS_START_X);
   return res;
@@ -59,6 +61,22 @@ void printInfo(WINDOW* info_win, int score) {
   wmove(info_win, 0, 0);
   wprintw(info_win, "Score: %.9d", score);
   wrefresh(info_win);
+}
+
+void printNextFigure(WINDOW* next_figure_win, int figure_type) {
+  wclear(next_figure_win);
+  wmove(next_figure_win, 0, 0);
+  waddstr(next_figure_win, "Next figure:");
+  Figure* fig = makeFigure(figure_type);
+  fig->pos.y = 3;
+  fig->pos.x = 5;
+  for (int i = 0; i != FIGURE_MAX_CELLS; ++i) {
+    Pos tmp = posToAbsolutePos(fig->cells[i], fig->pos);
+    mvwaddch(next_figure_win, tmp.y, tmp.x, '0');
+  }
+
+  free(fig);
+  wrefresh(next_figure_win);
 }
 
 void initInput() {

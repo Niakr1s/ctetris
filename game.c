@@ -25,7 +25,7 @@ void gameLoop(Game* game) {
   printInfo(info_win, game->score);
 
   WINDOW* next_figure_win = newNextFigureWin();
-  printFrame(next_figure_win);
+  printNextFigure(next_figure_win, glass->next_figure);
 
   struct timeval speed_amplify_time, move_down_time, current_time;
   gettimeofday(&speed_amplify_time, 0);
@@ -37,6 +37,8 @@ void gameLoop(Game* game) {
       if (!glassSpawnNextFigure(glass)) {
         game->status = GAME_END;
         continue;
+      } else {
+        printNextFigure(next_figure_win, glass->next_figure);
       }
       printGlass(win, glass);
     }
