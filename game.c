@@ -25,6 +25,7 @@ void gameLoop(Game* game) {
   while (game->status == GAME_RUNNING) {
     if (!game->glass.figure) {
       glassSpawnFigure(glass, FIGURE_ZIGZAG);
+      printGlass(win, glass);
     }
     if ((ch = getch()) != ERR) {
       switch (ch) {

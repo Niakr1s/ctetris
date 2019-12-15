@@ -9,13 +9,16 @@ Glass makeGlass(void) {
       res.cells[row][col] = 0;
     }
   }
-  res.spawn_pos = makePos(3, GLASS_WIDTH / 2);
   res.figure = 0;
   return res;
 }
 
 void glassSpawnFigure(Glass* glass, char fig) {
-  glass->figure = makeFigure(glass->spawn_pos, fig);
+  glass->figure = makeFigure(fig);
+  Pos spawn_pos;
+  spawn_pos.x = GLASS_WIDTH / 2;
+  spawn_pos.y = -figureTop(glass->figure);
+  glass->figure->pos = spawn_pos;
 }
 
 void glassDeleteFigure(Glass* glass) {
@@ -106,4 +109,15 @@ void glassShiftDown(Glass* glass) {
       glass->cells[to][i] = to == 0 ? 0 : glass->cells[from][i];
     }
   }
+}
+
+int glassIsClean(Glass* glass) {
+  for (int row = 0; row != GLASS_HEIGHT; ++row) {
+    for (int col = 0; col != GLASS_WIDTH; ++col) {
+      if (glass->cells[row][col]) {
+        return FALSE;
+      }
+    }
+  }
+  return TRUE;
 }

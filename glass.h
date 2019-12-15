@@ -7,12 +7,11 @@
 
 enum {
   GLASS_HEIGHT = 20,
-  GLASS_WIDTH = 60,
+  GLASS_WIDTH = 14,
 };
 
 typedef struct Glass {
   char cells[GLASS_HEIGHT][GLASS_WIDTH];
-  Pos spawn_pos;
   Figure* figure;
 } Glass;
 
@@ -29,5 +28,7 @@ BOOL glassFigureIntersects(Glass* glass);
 
 void glassClearRows(Glass* glass);
 void glassShiftDown(Glass* glass);
+
+BOOL glassIsClean(Glass* glass);
 
 #endif  // GLASS_H

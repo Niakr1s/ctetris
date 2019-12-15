@@ -31,9 +31,10 @@ void rotateN(Figure* fig, int angle) {
   rotateN(fig, angle - 1);
 }
 
-Figure* makeFigure(Pos pos, char name) {
+Figure* makeFigure(char name) {
   Figure* fig = malloc(sizeof(Figure));
-  fig->pos = pos;
+  fig->pos.x = 0;
+  fig->pos.y = 0;
   fig->current_angle = 0;
   switch (name) {
     case (FIGURE_LINE):

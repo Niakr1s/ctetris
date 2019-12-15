@@ -7,7 +7,7 @@
 
 void glassFigureMoveXTests() {
   Glass glass = makeGlass();
-  glass.figure = makeFigure(glass.spawn_pos, FIGURE_ZIGZAG);
+  glass.figure = makeFigure(FIGURE_ZIGZAG);
 
   int diff = 1;
   Pos from = glass.figure->pos;
@@ -26,8 +26,7 @@ void glassFigureMoveXTests() {
 }
 
 void figureLeftTests() {
-  Pos spawn_pos = {1, 1};
-  Figure* figure = makeFigure(spawn_pos, FIGURE_ZIGZAG);
+  Figure* figure = makeFigure(FIGURE_ZIGZAG);
   assert(figureLeft(figure) == 0);
 
   printf("figureLeftTests done\n");

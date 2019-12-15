@@ -25,7 +25,7 @@ typedef struct Figure {
   int max_angle;
 } Figure;
 
-Figure* makeFigure(Pos pos, char name);
+Figure* makeFigure(char name);
 
 void rotateRight(Figure* fig);
 void rotateLeft(Figure* fig);
