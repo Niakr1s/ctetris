@@ -2,7 +2,7 @@
 
 #include "display.h"
 
-Game makeGame() {
+Game makeGame(void) {
   Game res;
   res.status = GAME_RUNNING;
   res.speed = GAME_DEFAULT_SPEED;

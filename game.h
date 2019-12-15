@@ -23,7 +23,7 @@ typedef struct Game {
   int speed;
 } Game;
 
-Game makeGame();
+Game makeGame(void);
 
 void gameLoop(Game* game);
 
