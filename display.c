@@ -55,6 +55,10 @@ void printFrame(WINDOW* win) {
     mvwaddch(stdscr, y - 1, ix, '-');
     mvwaddch(stdscr, y + h, ix, '-');
   }
+  mvwaddch(stdscr, y - 1, x - 1, '+');
+  mvwaddch(stdscr, y - 1, x + w, '+');
+  mvwaddch(stdscr, y + h, x - 1, '+');
+  mvwaddch(stdscr, y + h, x + w, '+');
   refresh();
 }
 
