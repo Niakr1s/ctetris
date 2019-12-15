@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(ctetris LANGUAGES C)
 
 add_executable(ctetris
+    constants.h
     main.c
     figure.h
     figure.c
@@ -12,7 +13,8 @@ add_executable(ctetris
     glass.c
     display.h
     display.c
-    constants.h
+    game.h
+    game.c
 )
 
 target_link_libraries(ctetris
@@ -20,6 +22,7 @@ target_link_libraries(ctetris
 )
 
 add_executable(tests
+    constants.h
     tests_main.c
     figure.h
     figure.c
@@ -27,5 +30,4 @@ add_executable(tests
     pos.c
     glass.h
     glass.c
-    constants.h
 )
