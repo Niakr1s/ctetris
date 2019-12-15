@@ -37,8 +37,6 @@ void glassFigureMoveX(Glass* glass, int diff) {
   figureMoveX(glass->figure, step);
   if (glassFigureIntersects(glass)) {
     figureMoveX(glass->figure, -step);
-    glassGlueFigure(glass);
-    glassDeleteFigure(glass);
   } else {
     glassFigureMoveX(glass, diff - step);
   }
