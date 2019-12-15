@@ -14,8 +14,8 @@ enum {
   WIN_INFO_HEIGHT = 1,
   WIN_INFO_Y = WINS_START_Y,
   WIN_NEXT_FIGURE_WIDTH = WIN_INFO_WIDTH,
-  WIN_NEXT_FIGURE_HEIGHT = 10,
-  WIN_NEXT_FIGURE_Y = WIN_INFO_Y + WIN_INFO_HEIGHT + BORDER_THICKNESS * 2,
+  WIN_NEXT_FIGURE_HEIGHT = 6,
+  WIN_NEXT_FIGURE_Y = WIN_INFO_Y + WIN_INFO_HEIGHT + BORDER_THICKNESS * 3,
 };
 
 WINDOW* newGlassWin(void);
@@ -26,6 +26,8 @@ void printGlass(WINDOW* win, Glass* glass);
 void printFrame(WINDOW* win);
 void printInfo(WINDOW* info_win, int score);
 void printNextFigure(WINDOW* next_figure_win, int figure_type);
+
+void addTitle(WINDOW* win, const char* str);
 
 void initInput(void);
 

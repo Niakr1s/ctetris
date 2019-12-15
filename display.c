@@ -16,6 +16,7 @@ WINDOW* newInfoWin() {
 WINDOW* newNextFigureWin() {
   WINDOW* res = newwin(WIN_NEXT_FIGURE_HEIGHT, WIN_NEXT_FIGURE_WIDTH,
                        WIN_NEXT_FIGURE_Y, RIGHT_WINS_X);
+  addTitle(res, "Next figure:");
   return res;
 }
 
@@ -66,17 +67,22 @@ void printInfo(WINDOW* info_win, int score) {
 void printNextFigure(WINDOW* next_figure_win, int figure_type) {
   wclear(next_figure_win);
   wmove(next_figure_win, 0, 0);
-  waddstr(next_figure_win, "Next figure:");
   Figure* fig = makeFigure(figure_type);
-  fig->pos.y = 3;
+  fig->pos.y = WIN_NEXT_FIGURE_HEIGHT / 2 - 1;
   fig->pos.x = 5;
   for (int i = 0; i != FIGURE_MAX_CELLS; ++i) {
     Pos tmp = posToAbsolutePos(fig->cells[i], fig->pos);
     mvwaddch(next_figure_win, tmp.y, tmp.x, '0');
   }
-
   free(fig);
   wrefresh(next_figure_win);
+}
+
+void addTitle(WINDOW* win, const char* str) {
+  int y, x;
+  getbegyx(win, y, x);
+  mvaddstr(y - 1, x, str);
+  refresh();
 }
 
 void initInput() {
