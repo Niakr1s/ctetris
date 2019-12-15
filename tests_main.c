@@ -1,13 +1,14 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "constants.h"
 #include "figure.h"
 #include "glass.h"
 #include "pos.h"
 
 void glassFigureMoveXTests() {
   Glass glass = makeGlass();
-  glass.figure = makeFigure(FIGURE_ZIGZAG);
+  glassSpawnFigure(&glass, FIGURE_ZIGZAG);
 
   int diff = 1;
   Pos from = glass.figure->pos;
@@ -25,15 +26,21 @@ void glassFigureMoveXTests() {
   printf("glassFigureMoveXTests done\n");
 }
 
-void figureLeftTests() {
-  Figure* figure = makeFigure(FIGURE_ZIGZAG);
-  assert(figureLeft(figure) == 0);
+void glassShiftDownTests() {
+  Glass glass = makeGlass();
+  for (int row = 0; row != GLASS_HEIGHT; ++row) {
+    for (int col = 0; col != GLASS_WIDTH; ++col) {
+      glass.cells[row][col] = 1;
+    }
+  }
+  glassClearRows(&glass);
+  assert(glassIsClean(&glass) == TRUE);
 
-  printf("figureLeftTests done\n");
+  printf("glassShiftDownTests done\n");
 }
 
 int main(int argc, char* argv[]) {
   glassFigureMoveXTests();
-  figureLeftTests();
+  glassShiftDownTests();
   return 0;
 }

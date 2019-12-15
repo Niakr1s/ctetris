@@ -102,22 +102,30 @@ BOOL glassFigureIntersects(Glass* glass) {
 }
 
 void glassClearRows(Glass* glass) {
-  for (int i = 0; i != GLASS_WIDTH; ++i) {
-    if (!glass->cells[GLASS_HEIGHT - 1][i]) {
-      return;
+  for (int row = GLASS_HEIGHT - 1; row != 0; --row) {
+    if (glassRowIsFull(glass, row)) {
+      glassShiftDown(glass, row);
+      ++row;
     }
   }
-  glassShiftDown(glass);
-  glassClearRows(glass);
 }
 
-void glassShiftDown(Glass* glass) {
-  for (int to = GLASS_HEIGHT - 1; to != -1; --to) {
+void glassShiftDown(Glass* glass, int row) {
+  for (int to = row; to != -1; --to) {
     int from = to - 1;
     for (int i = 0; i != GLASS_WIDTH; ++i) {
       glass->cells[to][i] = to == 0 ? 0 : glass->cells[from][i];
     }
   }
+}
+
+BOOL glassRowIsFull(Glass* glass, int row) {
+  for (int col = 0; col != GLASS_WIDTH; ++col) {
+    if (!glass->cells[row][col]) {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 int glassIsClean(Glass* glass) {
