@@ -12,7 +12,7 @@ WINDOW* newGlassWin() {
 WINDOW* newInfoWin() {
   int w = getmaxx(stdscr);
   int y = 2;
-  int width = 10;
+  int width = 7 + 9;
 
   WINDOW* res = newwin(1, width, y, w - width - 5);
   return res;
@@ -58,7 +58,7 @@ void printFrame(WINDOW* win) {
 
 void printInfo(WINDOW* info_win, int score) {
   wmove(info_win, 0, 0);
-  wprintw(info_win, "%.10d", score);
+  wprintw(info_win, "Score: %.9d", score);
   wrefresh(info_win);
 }
 

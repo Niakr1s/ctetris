@@ -22,6 +22,7 @@ void gameLoop(Game* game) {
   printGlass(win, glass);
 
   WINDOW* info_win = newInfoWin();
+  printInfo(info_win, game->score);
 
   struct timeval speed_amplify_time, move_down_time, current_time;
   gettimeofday(&speed_amplify_time, 0);
@@ -38,11 +39,9 @@ void gameLoop(Game* game) {
     }
 
     gettimeofday(&current_time, 0);
-
     if (gameTryMoveDown(game, &move_down_time, &current_time)) {
       printGlass(win, glass);
     }
-
     gameTrySpeedUp(game, &speed_amplify_time, &current_time);
 
     if ((ch = getch()) != ERR) {
@@ -68,8 +67,10 @@ void gameLoop(Game* game) {
           break;
       }
       int cleared_rows = glassClearRows(glass);
-      game->score += cleared_rows * 100;
-      printInfo(info_win, game->score);
+      if (cleared_rows) {
+        game->score += cleared_rows * 100;
+        printInfo(info_win, game->score);
+      }
       printGlass(win, glass);
     }
   }
