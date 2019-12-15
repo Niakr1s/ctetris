@@ -28,7 +28,7 @@ void glassFigureMoveY(Glass* glass, int diff);
 void glassGlueFigure(Glass* glass);
 BOOL glassFigureIntersects(Glass* glass);
 
-void glassClearRows(Glass* glass);
+int glassClearRows(Glass* glass);
 void glassShiftDown(Glass* glass, int row);
 
 BOOL glassRowIsFull(Glass* glass, int row);

@@ -9,6 +9,15 @@ WINDOW* newGlassWin() {
   return res;
 }
 
+WINDOW* newInfoWin() {
+  int w = getmaxx(stdscr);
+  int y = 2;
+  int width = 10;
+
+  WINDOW* res = newwin(1, width, y, w - width - 5);
+  return res;
+}
+
 void printGlass(WINDOW* win, Glass* glass) {
   wclear(win);
   for (int row = 0; row != GLASS_HEIGHT; ++row) {
@@ -45,6 +54,12 @@ void printFrame(WINDOW* win) {
     mvwaddch(stdscr, y + h, ix, '-');
   }
   refresh();
+}
+
+void printInfo(WINDOW* info_win, int score) {
+  wmove(info_win, 0, 0);
+  wprintw(info_win, "%.10d", score);
+  wrefresh(info_win);
 }
 
 void initInput() {

@@ -13,14 +13,15 @@ Game makeGame(void) {
 
 void gameLoop(Game* game) {
   initscr();
+  initInput();
 
-  WINDOW* win = newGlassWin();
   Glass* glass = &game->glass;
 
-  initInput();
+  WINDOW* win = newGlassWin();
   printFrame(win);
-
   printGlass(win, glass);
+
+  WINDOW* info_win = newInfoWin();
 
   struct timeval speed_amplify_time, move_down_time, current_time;
   gettimeofday(&speed_amplify_time, 0);
@@ -66,7 +67,9 @@ void gameLoop(Game* game) {
           game->status = GAME_END;
           break;
       }
-      glassClearRows(glass);
+      int cleared_rows = glassClearRows(glass);
+      game->score += cleared_rows * 100;
+      printInfo(info_win, game->score);
       printGlass(win, glass);
     }
   }

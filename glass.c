@@ -101,13 +101,16 @@ BOOL glassFigureIntersects(Glass* glass) {
   return FALSE;
 }
 
-void glassClearRows(Glass* glass) {
+int glassClearRows(Glass* glass) {
+  int res = 0;
   for (int row = GLASS_HEIGHT - 1; row != 0; --row) {
     if (glassRowIsFull(glass, row)) {
       glassShiftDown(glass, row);
+      ++res;
       ++row;
     }
   }
+  return res;
 }
 
 void glassShiftDown(Glass* glass, int row) {
