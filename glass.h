@@ -17,7 +17,7 @@ typedef struct Glass {
 
 Glass makeGlass(void);
 
-void glassSpawnFigure(Glass* glass, char fig);
+BOOL glassSpawnFigure(Glass* glass, char fig);
 void glassDeleteFigure(Glass* glass);
 
 void glassFigureMoveX(Glass* glass, int diff);

@@ -13,12 +13,13 @@ Glass makeGlass(void) {
   return res;
 }
 
-void glassSpawnFigure(Glass* glass, char fig) {
+BOOL glassSpawnFigure(Glass* glass, char fig) {
   glass->figure = makeFigure(fig);
   Pos spawn_pos;
   spawn_pos.x = GLASS_WIDTH / 2;
   spawn_pos.y = -figureTop(glass->figure);
   glass->figure->pos = spawn_pos;
+  return glassFigureIntersects(glass) ? FALSE : TRUE;
 }
 
 void glassDeleteFigure(Glass* glass) {
