@@ -22,9 +22,9 @@ void gameLoop(Game* game) {
 
   printGlass(win, glass);
 
-  struct timeval speed_amplify_time, start_time, current_time;
+  struct timeval speed_amplify_time, move_down_time, current_time;
   gettimeofday(&speed_amplify_time, 0);
-  gettimeofday(&start_time, 0);
+  gettimeofday(&move_down_time, 0);
 
   int ch;
   while (game->status == GAME_RUNNING) {
@@ -39,9 +39,9 @@ void gameLoop(Game* game) {
     gettimeofday(&current_time, 0);
 
     // moving down
-    if (timeDelta(&start_time, &current_time) >= game->speed) {
+    if (timeDelta(&move_down_time, &current_time) >= game->speed) {
       glassFigureMoveY(glass, 1);
-      start_time = current_time;
+      move_down_time = current_time;
       printGlass(win, glass);
     }
 
