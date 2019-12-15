@@ -38,19 +38,11 @@ void gameLoop(Game* game) {
 
     gettimeofday(&current_time, 0);
 
-    // moving down
-    if (timeDelta(&move_down_time, &current_time) >= game->speed) {
-      glassFigureMoveY(glass, 1);
-      move_down_time = current_time;
+    if (gameTryMoveDown(game, &move_down_time, &current_time)) {
       printGlass(win, glass);
     }
 
-    // speed up
-    if (timeDelta(&speed_amplify_time, &current_time) >=
-        GAME_SPEED_AMPLIFY_INTERVAL) {
-      game->speed = (int)(game->speed * GAME_SPEED_AMPLIFY_MULTIPLIER);
-      speed_amplify_time = current_time;
-    }
+    gameTrySpeedUp(game, &speed_amplify_time, &current_time);
 
     if ((ch = getch()) != ERR) {
       switch (ch) {
@@ -79,6 +71,29 @@ void gameLoop(Game* game) {
     }
   }
   endwin();
+}
+
+BOOL gameTryMoveDown(Game* game,
+                     struct timeval* move_down_time,
+                     struct timeval* current_time) {
+  if (timeDelta(move_down_time, current_time) >= game->speed) {
+    glassFigureMoveY(&game->glass, 1);
+    *move_down_time = *current_time;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+BOOL gameTrySpeedUp(Game* game,
+                    struct timeval* speed_amplify_time,
+                    struct timeval* current_time) {
+  if (timeDelta(speed_amplify_time, current_time) >=
+      GAME_SPEED_AMPLIFY_INTERVAL) {
+    game->speed = (int)(game->speed * GAME_SPEED_AMPLIFY_MULTIPLIER);
+    *speed_amplify_time = *current_time;
+    return TRUE;
+  }
+  return FALSE;
 }
 
 long long timeMicroSeconds(struct timeval* time) {
