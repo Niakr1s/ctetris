@@ -8,7 +8,6 @@
 
 void glassFigureMoveXTests() {
   Glass glass = makeGlass();
-  glassSpawnFigure(&glass, FIGURE_ZIGZAG);
 
   int diff = 1;
   Pos from = glass.figure->pos;

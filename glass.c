@@ -6,14 +6,15 @@
 
 Glass makeGlass(void) {
   randomInit();
-  Glass res;
+  Glass glass;
   for (int row = 0; row != GLASS_HEIGHT; ++row) {
     for (int col = 0; col != GLASS_WIDTH; ++col) {
-      res.cells[row][col] = 0;
+      glass.cells[row][col] = 0;
     }
   }
-  res.figure = 0;
-  return res;
+  glassRandomizeNextFigure(&glass);
+  glassSpawnNextFigure(&glass);
+  return glass;
 }
 
 BOOL glassSpawnFigure(Glass* glass, int fig) {
@@ -25,9 +26,15 @@ BOOL glassSpawnFigure(Glass* glass, int fig) {
   return glassFigureIntersects(glass) ? FALSE : TRUE;
 }
 
-int glassSpawnRandomFigure(Glass* glass) {
-  int fig = randomZeroToMax(FIGURE_MAX);
+BOOL glassSpawnNextFigure(Glass* glass) {
+  int fig = glass->next_figure;
+  glassRandomizeNextFigure(glass);
   return glassSpawnFigure(glass, fig);
+}
+
+int glassRandomizeNextFigure(Glass* glass) {
+  glass->next_figure = randomZeroToMax(FIGURE_MAX);
+  return glass->next_figure;
 }
 
 void glassDeleteFigure(Glass* glass) {
