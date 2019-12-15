@@ -1,8 +1,11 @@
 #include "glass.h"
 
-#include "stdlib.h"
+#include <stdlib.h>
+
+#include "rnd.h"
 
 Glass makeGlass(void) {
+  randomInit();
   Glass res;
   for (int row = 0; row != GLASS_HEIGHT; ++row) {
     for (int col = 0; col != GLASS_WIDTH; ++col) {
@@ -13,13 +16,18 @@ Glass makeGlass(void) {
   return res;
 }
 
-BOOL glassSpawnFigure(Glass* glass, char fig) {
+BOOL glassSpawnFigure(Glass* glass, int fig) {
   glass->figure = makeFigure(fig);
   Pos spawn_pos;
   spawn_pos.x = GLASS_WIDTH / 2;
   spawn_pos.y = -figureTop(glass->figure);
   glass->figure->pos = spawn_pos;
   return glassFigureIntersects(glass) ? FALSE : TRUE;
+}
+
+int glassSpawnRandomFigure(Glass* glass) {
+  int fig = randomZeroToMax(FIGURE_MAX);
+  return glassSpawnFigure(glass, fig);
 }
 
 void glassDeleteFigure(Glass* glass) {

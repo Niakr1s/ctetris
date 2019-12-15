@@ -20,12 +20,12 @@ typedef struct Figure {
   Pos pos;
   Pos base_cells[FIGURE_MAX_CELLS];
   Pos cells[FIGURE_MAX_CELLS];
-  char name;
+  int name;
   int current_angle;
   int max_angle;
 } Figure;
 
-Figure* makeFigure(char name);
+Figure* makeFigure(int name);
 
 void rotateRight(Figure* fig);
 void rotateLeft(Figure* fig);

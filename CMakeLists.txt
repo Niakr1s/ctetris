@@ -15,6 +15,8 @@ add_executable(ctetris
     display.c
     game.h
     game.c
+    rnd.h
+    rnd.c
 )
 
 target_link_libraries(ctetris
@@ -30,4 +32,6 @@ add_executable(tests
     pos.c
     glass.h
     glass.c
+    rnd.h
+    rnd.c
 )
