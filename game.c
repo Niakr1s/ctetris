@@ -66,9 +66,6 @@ void gameLoop(Game* game) {
           glassFigureMoveY(glass, 1);
           need_clear_rows = TRUE;
           break;
-        case (KEY_UP):
-          glassFigureMoveY(glass, -1);
-          break;
         case (' '):
           glassFigureRotateN(glass, 1);
           break;
