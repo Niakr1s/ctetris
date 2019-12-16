@@ -3,7 +3,7 @@
 #include "math.h"
 #include "stdlib.h"
 
-void rotateN(Figure* fig, int angle) {
+void figureRotateN(Figure* fig, int angle) {
   angle %= fig->max_angle;
   while (angle < 0) {
     angle += fig->max_angle;
@@ -20,7 +20,7 @@ void rotateN(Figure* fig, int angle) {
       fig->cells[i].x = -fig->cells[i].x;
     }
   }
-  rotateN(fig, angle - 1);
+  figureRotateN(fig, angle - 1);
 }
 
 Figure* makeFigure(int name) {
