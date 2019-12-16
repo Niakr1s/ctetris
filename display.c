@@ -68,17 +68,14 @@ void printInfo(WINDOW* info_win, int score) {
   wrefresh(info_win);
 }
 
-void printNextFigure(WINDOW* next_figure_win, int figure_type) {
+void printNextFigure(WINDOW* next_figure_win, Figure* fig) {
   wclear(next_figure_win);
   wmove(next_figure_win, 0, 0);
-  Figure* fig = makeFigure(figure_type);
-  fig->pos.y = WIN_NEXT_FIGURE_HEIGHT / 2 - 1;
-  fig->pos.x = 5;
+  Pos tmp_base = {WIN_NEXT_FIGURE_HEIGHT / 2 - 1, 5};
   for (int i = 0; i != FIGURE_MAX_CELLS; ++i) {
-    Pos tmp = posToAbsolutePos(fig->cells[i], fig->pos);
+    Pos tmp = posToAbsolutePos(fig->cells[i], tmp_base);
     mvwaddch(next_figure_win, tmp.y, tmp.x, '0');
   }
-  free(fig);
   wrefresh(next_figure_win);
 }
 

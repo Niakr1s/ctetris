@@ -12,29 +12,30 @@ Glass makeGlass(void) {
       glass.cells[row][col] = 0;
     }
   }
+  glass.figure = 0;
   glassRandomizeNextFigure(&glass);
-  glassSpawnNextFigure(&glass);
   return glass;
 }
 
-BOOL glassSpawnFigure(Glass* glass, int fig) {
-  glass->figure = makeFigure(fig);
+Figure* glassMakeFigure(int fig) {
+  Figure* res = makeFigure(fig);
   Pos spawn_pos;
-  spawn_pos.x = GLASS_WIDTH / 2;
-  spawn_pos.y = -figureTop(glass->figure);
-  glass->figure->pos = spawn_pos;
+  spawn_pos.x = GLASS_WIDTH / 2 - 1;
+  spawn_pos.y = -figureTop(res);
+  res->pos = spawn_pos;
+  return res;
+}
+
+BOOL glassSpawnFigure(Glass* glass) {
+  glass->figure = glass->next_figure;
+  glassRandomizeNextFigure(glass);
   return glassFigureIntersects(glass) ? FALSE : TRUE;
 }
 
-BOOL glassSpawnNextFigure(Glass* glass) {
-  int fig = glass->next_figure;
-  glassRandomizeNextFigure(glass);
-  return glassSpawnFigure(glass, fig);
-}
-
-int glassRandomizeNextFigure(Glass* glass) {
-  glass->next_figure = randomZeroToMax(FIGURE_MAX);
-  return glass->next_figure;
+void glassRandomizeNextFigure(Glass* glass) {
+  glass->next_figure = glassMakeFigure(randomZeroToMax(FIGURE_MAX));
+  figureRotateN(glass->next_figure,
+                randomZeroToMax(glass->next_figure->max_angle));
 }
 
 void glassDeleteFigure(Glass* glass) {

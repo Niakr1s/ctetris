@@ -13,15 +13,15 @@ enum {
 typedef struct Glass {
   char cells[GLASS_HEIGHT][GLASS_WIDTH];
   Figure* figure;
-  int next_figure;
+  Figure* next_figure;
 } Glass;
 
 Glass makeGlass(void);
 
-BOOL glassSpawnFigure(Glass* glass, int fig);
-BOOL glassSpawnNextFigure(Glass* glass);
+Figure* glassMakeFigure(int fig);
 
-int glassRandomizeNextFigure(Glass* glass);
+BOOL glassSpawnFigure(Glass* glass);
+void glassRandomizeNextFigure(Glass* glass);
 
 void glassDeleteFigure(Glass* glass);
 

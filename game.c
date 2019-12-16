@@ -20,7 +20,6 @@ void gameLoop(Game* game) {
 
   WINDOW* win = newGlassWin();
   printFrame(win);
-  printGlass(win, glass);
 
   WINDOW* info_win = newInfoWin();
   printInfo(info_win, game->score);
@@ -38,7 +37,7 @@ void gameLoop(Game* game) {
     BOOL need_clear_rows = FALSE;
 
     if (!game->glass.figure) {
-      if (!glassSpawnNextFigure(glass)) {
+      if (!glassSpawnFigure(glass)) {
         game->status = GAME_END;
         continue;
       } else {

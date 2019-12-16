@@ -25,7 +25,7 @@ WINDOW* newNextFigureWin(void);
 void printGlass(WINDOW* win, Glass* glass);
 void printFrame(WINDOW* win);
 void printInfo(WINDOW* info_win, int score);
-void printNextFigure(WINDOW* next_figure_win, int figure_type);
+void printNextFigure(WINDOW* next_figure_win, Figure *figure_type);
 
 void addTitle(WINDOW* win, const char* str);
 
