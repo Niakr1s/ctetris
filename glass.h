@@ -17,6 +17,7 @@ typedef struct Glass {
 } Glass;
 
 Glass makeGlass(void);
+void freeGlass(Glass* glass);
 
 Figure* glassMakeFigure(int fig);
 

@@ -89,6 +89,7 @@ void gameLoop(Game* game) {
 
     thrd_sleep(&(struct timespec){.tv_nsec = (int)(SECOND * 0.1)}, 0);
   }
+  freeGlass(glass);
   endwin();
 }
 

@@ -17,6 +17,11 @@ Glass makeGlass(void) {
   return glass;
 }
 
+void freeGlass(Glass* glass) {
+  free(glass->figure);
+  free(glass->next_figure);
+}
+
 Figure* glassMakeFigure(int fig) {
   Figure* res = makeFigure(fig);
   Pos spawn_pos;

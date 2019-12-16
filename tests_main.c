@@ -23,6 +23,8 @@ void glassFigureMoveXTests() {
   assert((from.x + diff) == to.x && from.y == to.y);
   from = to;
 
+  freeGlass(&glass);
+
   printf("glassFigureMoveXTests done\n");
 }
 
@@ -35,6 +37,8 @@ void glassShiftDownTests() {
   }
   glassClearRows(&glass);
   assert(glassIsClean(&glass) == TRUE);
+
+  freeGlass(&glass);
 
   printf("glassShiftDownTests done\n");
 }
