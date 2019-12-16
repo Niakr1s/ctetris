@@ -8,6 +8,7 @@
 
 void glassFigureMoveXTests() {
   Glass glass = makeGlass();
+  glassSpawnFigure(&glass);
 
   int diff = 1;
   Pos from = glass.figure->pos;
