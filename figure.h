@@ -30,8 +30,6 @@ typedef struct Figure {
 
 Figure* makeFigure(int name);
 
-void rotateRight(Figure* fig);
-void rotateLeft(Figure* fig);
 void rotateN(Figure* fig, int angle);
 
 void figureMoveX(Figure* fig, int diff);

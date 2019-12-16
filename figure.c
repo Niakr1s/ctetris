@@ -3,14 +3,6 @@
 #include "math.h"
 #include "stdlib.h"
 
-void rotateRight(Figure* fig) {
-  rotateN(fig, 1);
-}
-
-void rotateLeft(Figure* fig) {
-  rotateN(fig, -1);
-}
-
 void rotateN(Figure* fig, int angle) {
   angle %= fig->max_angle;
   while (angle < 0) {
