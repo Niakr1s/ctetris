@@ -27,6 +27,7 @@ target_link_libraries(ctetris
     ncurses
 )
 
+if (WITH_TESTS)
 add_executable(tests
     tests_main.c
     ${SRC}
@@ -35,3 +36,4 @@ add_executable(tests
 target_link_libraries(tests
     ncurses
 )
+endif ()
