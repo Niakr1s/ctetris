@@ -61,8 +61,16 @@ Figure* makeFigure(int name) {
       fig->base_cells[3] = makePos(1, 1);
       fig->max_angle = 1;
       break;
-    case (FIGURE_ZIGZAG):
-      fig->name = FIGURE_ZIGZAG;
+    case (FIGURE_ZIGZAG_RIGHT):
+      fig->name = FIGURE_ZIGZAG_RIGHT;
+      fig->base_cells[0] = makePos(-1, 1);
+      fig->base_cells[1] = makePos(0, 1);
+      fig->base_cells[2] = makePos(0, 0);
+      fig->base_cells[3] = makePos(1, 0);
+      fig->max_angle = 2;
+      break;
+    case (FIGURE_ZIGZAG_LEFT):
+      fig->name = FIGURE_ZIGZAG_LEFT;
       fig->base_cells[0] = makePos(-1, -1);
       fig->base_cells[1] = makePos(0, -1);
       fig->base_cells[2] = makePos(0, 0);
