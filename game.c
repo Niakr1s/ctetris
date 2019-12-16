@@ -1,6 +1,7 @@
 #include "game.h"
 
-#include "display.h"
+#include <threads.h>
+#include <time.h>
 
 Game makeGame(void) {
   Game res;
@@ -33,6 +34,9 @@ void gameLoop(Game* game) {
 
   int ch;
   while (game->status == GAME_RUNNING) {
+    BOOL need_reprint_glass = FALSE;
+    BOOL need_clear_rows = FALSE;
+
     if (!game->glass.figure) {
       if (!glassSpawnNextFigure(glass)) {
         game->status = GAME_END;
@@ -45,11 +49,13 @@ void gameLoop(Game* game) {
 
     gettimeofday(&current_time, 0);
     if (gameTryMoveDown(game, &move_down_time, &current_time)) {
-      printGlass(win, glass);
+      need_reprint_glass = TRUE;
+      need_clear_rows = TRUE;
     }
     gameTrySpeedUp(game, &speed_amplify_time, &current_time);
 
     if ((ch = getch()) != ERR) {
+      need_reprint_glass = TRUE;
       switch (ch) {
         case (KEY_RIGHT):
           glassFigureMoveX(glass, 1);
@@ -59,6 +65,7 @@ void gameLoop(Game* game) {
           break;
         case (KEY_DOWN):
           glassFigureMoveY(glass, 1);
+          need_clear_rows = TRUE;
           break;
         case (KEY_UP):
           glassFigureMoveY(glass, -1);
@@ -71,14 +78,20 @@ void gameLoop(Game* game) {
           game->status = GAME_END;
           break;
       }
+    }
+    if (need_clear_rows) {
+      int cleared_rows = glassClearRows(&game->glass);
+      if (cleared_rows) {
+        game->score += cleared_rows * 100;
+        printInfo(info_win, game->score);
+        need_reprint_glass = TRUE;
+      }
+    }
+    if (need_reprint_glass) {
       printGlass(win, glass);
     }
-    int cleared_rows = glassClearRows(glass);
-    if (cleared_rows) {
-      game->score += cleared_rows * 100;
-      printInfo(info_win, game->score);
-      printGlass(win, glass);
-    }
+
+    thrd_sleep(&(struct timespec){.tv_nsec = (int)(SECOND * 0.1)}, 0);
   }
   endwin();
 }

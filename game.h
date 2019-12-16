@@ -4,6 +4,7 @@
 #include <sys/time.h>
 
 #include "constants.h"
+#include "display.h"
 #include "glass.h"
 
 static const int SECOND = 1000000LL;
