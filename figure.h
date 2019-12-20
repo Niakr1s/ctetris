@@ -1,6 +1,7 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
+#include "abstractfigure.h"
 #include "constants.h"
 #include "pos.h"
 

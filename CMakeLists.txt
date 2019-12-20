@@ -16,6 +16,8 @@ set(SRC
     game.cpp
     rnd.h
     rnd.cpp
+    abstractfigure.h
+    abstractfigure.cpp
 )
 
 add_executable(ctetris
