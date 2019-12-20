@@ -1,17 +1,22 @@
 #ifndef POS_H
 #define POS_H
 
-typedef struct Pos {
-  int y, x;
-} Pos;
+class Pos {
+ public:
+  Pos(int y, int x);
 
-Pos makePos(int y, int x);
+  Pos reversed() const;
+  void moveY(int diff);
+  void moveX(int diff);
 
-Pos reversedPos(Pos pos);
+  Pos operator+(const Pos& rhs) const;
+  bool operator==(const Pos& rhs) const;
 
-void posMoveX(Pos* pos, int diff);
-void posMoveY(Pos* pos, int diff);
+  int y() const;
+  int x() const;
 
-Pos posToAbsolutePos(Pos pos, Pos currentPos);
+ private:
+  int y_, x_;
+};
 
 #endif  // POS_H

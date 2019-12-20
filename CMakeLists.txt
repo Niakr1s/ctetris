@@ -1,25 +1,25 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(ctetris LANGUAGES C)
+project(ctetris LANGUAGES CXX VERSION 17)
 
 set(SRC
     constants.h
     figure.h
-    figure.c
+    figure.cpp
     pos.h
-    pos.c
+    pos.cpp
     glass.h
-    glass.c
+    glass.cpp
     display.h
-    display.c
+    display.cpp
     game.h
-    game.c
+    game.cpp
     rnd.h
-    rnd.c
+    rnd.cpp
 )
 
 add_executable(ctetris
-    main.c
+    main.cpp
     ${SRC}
 )
 
@@ -29,7 +29,7 @@ target_link_libraries(ctetris
 
 if (WITH_TESTS)
 add_executable(tests
-    tests_main.c
+    tests_main.cpp
     ${SRC}
 )
 

@@ -31,58 +31,58 @@ Figure* makeFigure(int name) {
   switch (name) {
     case (FIGURE_LINE):
       fig->name = FIGURE_LINE;
-      fig->base_cells[0] = makePos(-1, 0);
-      fig->base_cells[1] = makePos(0, 0);
-      fig->base_cells[2] = makePos(1, 0);
-      fig->base_cells[3] = makePos(2, 0);
+      fig->base_cells[0] = Pos(-1, 0);
+      fig->base_cells[1] = Pos(0, 0);
+      fig->base_cells[2] = Pos(1, 0);
+      fig->base_cells[3] = Pos(2, 0);
       fig->max_angle = 2;
       break;
     case (FIGURE_TRIANGLE):
       fig->name = FIGURE_TRIANGLE;
-      fig->base_cells[0] = makePos(-1, 0);
-      fig->base_cells[1] = makePos(0, -1);
-      fig->base_cells[2] = makePos(0, 0);
-      fig->base_cells[3] = makePos(0, 1);
+      fig->base_cells[0] = Pos(-1, 0);
+      fig->base_cells[1] = Pos(0, -1);
+      fig->base_cells[2] = Pos(0, 0);
+      fig->base_cells[3] = Pos(0, 1);
       fig->max_angle = 4;
       break;
     case (FIGURE_BLOCK):
       fig->name = FIGURE_BLOCK;
-      fig->base_cells[0] = makePos(0, 0);
-      fig->base_cells[1] = makePos(0, 1);
-      fig->base_cells[2] = makePos(1, 0);
-      fig->base_cells[3] = makePos(1, 1);
+      fig->base_cells[0] = Pos(0, 0);
+      fig->base_cells[1] = Pos(0, 1);
+      fig->base_cells[2] = Pos(1, 0);
+      fig->base_cells[3] = Pos(1, 1);
       fig->max_angle = 1;
       break;
     case (FIGURE_ZIGZAG_RIGHT):
       fig->name = FIGURE_ZIGZAG_RIGHT;
-      fig->base_cells[0] = makePos(-1, 1);
-      fig->base_cells[1] = makePos(0, 1);
-      fig->base_cells[2] = makePos(0, 0);
-      fig->base_cells[3] = makePos(1, 0);
+      fig->base_cells[0] = Pos(-1, 1);
+      fig->base_cells[1] = Pos(0, 1);
+      fig->base_cells[2] = Pos(0, 0);
+      fig->base_cells[3] = Pos(1, 0);
       fig->max_angle = 2;
       break;
     case (FIGURE_ZIGZAG_LEFT):
       fig->name = FIGURE_ZIGZAG_LEFT;
-      fig->base_cells[0] = makePos(-1, -1);
-      fig->base_cells[1] = makePos(0, -1);
-      fig->base_cells[2] = makePos(0, 0);
-      fig->base_cells[3] = makePos(1, 0);
+      fig->base_cells[0] = Pos(-1, -1);
+      fig->base_cells[1] = Pos(0, -1);
+      fig->base_cells[2] = Pos(0, 0);
+      fig->base_cells[3] = Pos(1, 0);
       fig->max_angle = 2;
       break;
     case (FIGURE_G_RIGHT):
       fig->name = FIGURE_G_RIGHT;
-      fig->base_cells[0] = makePos(-1, 1);
-      fig->base_cells[1] = makePos(-1, 0);
-      fig->base_cells[2] = makePos(0, 0);
-      fig->base_cells[3] = makePos(1, 0);
+      fig->base_cells[0] = Pos(-1, 1);
+      fig->base_cells[1] = Pos(-1, 0);
+      fig->base_cells[2] = Pos(0, 0);
+      fig->base_cells[3] = Pos(1, 0);
       fig->max_angle = 4;
       break;
     case (FIGURE_G_LEFT):
       fig->name = FIGURE_G_LEFT;
-      fig->base_cells[0] = makePos(-1, -1);
-      fig->base_cells[1] = makePos(-1, 0);
-      fig->base_cells[2] = makePos(0, 0);
-      fig->base_cells[3] = makePos(1, 0);
+      fig->base_cells[0] = Pos(-1, -1);
+      fig->base_cells[1] = Pos(-1, 0);
+      fig->base_cells[2] = Pos(0, 0);
+      fig->base_cells[3] = Pos(1, 0);
       fig->max_angle = 4;
       break;
     default:
