@@ -3,9 +3,8 @@ cmake_minimum_required(VERSION 3.5)
 project(ctetris LANGUAGES CXX VERSION 17)
 
 set(SRC
-    constants.h
-    figure.h
-    figure.cpp
+    standardfigure.h
+    standardfigure.cpp
     pos.h
     pos.cpp
     glass.h
@@ -16,9 +15,22 @@ set(SRC
     game.cpp
     rnd.h
     rnd.cpp
-    abstractfigure.h
-    abstractfigure.cpp
+    ifigure.h
+    ifigure.cpp
+    ifigurefactory.h
+    ifigurefactory.cpp
+    figurefactory.h
+    figurefactory.cpp
+    randomfigurefactory.h
+    randomfigurefactory.cpp
 )
+
+if(WIN32)
+    file(GLOB CURSES ${PDCURSES_LIB_DIR}/*)
+    include_directories(${PDCURSES_INCLUDE_DIR})
+else()
+    set(CURSES ncurses)
+endif()
 
 add_executable(ctetris
     main.cpp
@@ -26,7 +38,7 @@ add_executable(ctetris
 )
 
 target_link_libraries(ctetris
-    ncurses
+    ${CURSES}
 )
 
 if (WITH_TESTS)
@@ -36,6 +48,6 @@ add_executable(tests
 )
 
 target_link_libraries(tests
-    ncurses
+    ${CURSES}
 )
 endif ()

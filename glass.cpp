@@ -2,137 +2,101 @@
 
 #include <stdlib.h>
 
+#include "randomfigurefactory.h"
 #include "rnd.h"
+#include "standardfigure.h"
 
-Glass makeGlass(void) {
-  randomInit();
-  Glass glass;
-  for (int row = 0; row != GLASS_HEIGHT; ++row) {
-    for (int col = 0; col != GLASS_WIDTH; ++col) {
-      glass.cells[row][col] = 0;
+Glass::Glass(int height, int width)
+    : height_(height),
+      width_(width),
+      figure_factory_(std::make_shared<RandomFigureFactory<StandardFigure>>()) {
+  cells_.resize(height_);
+  for (int row = 0; row != height_; ++row) {
+    cells_[0].reserve(width_);
+    for (int col = 0; col != width_; ++col) {
+      cells_[row].push_back(EMPTY_CELL);
     }
   }
-  glass.figure = 0;
-  glassRandomizeNextFigure(&glass);
-  return glass;
+  figure_ = figure_factory_->nextFigure();
+  next_figure_ = figure_factory_->nextFigure();
 }
 
-void freeGlass(Glass* glass) {
-  free(glass->figure);
-  free(glass->next_figure);
-}
+int Glass::height() const { return height_; }
+int Glass::width() const { return width_; }
 
-Figure* glassMakeFigure(int fig) {
-  Figure* res = makeFigure(fig);
-  Pos spawn_pos;
-  spawn_pos.x = GLASS_WIDTH / 2 - 1;
-  spawn_pos.y = -figureTop(res);
-  res->pos = spawn_pos;
-  return res;
-}
-
-BOOL glassSpawnFigure(Glass* glass) {
-  glass->figure = glass->next_figure;
-  glassRandomizeNextFigure(glass);
-  return glassFigureIntersects(glass) ? FALSE : TRUE;
-}
-
-void glassRandomizeNextFigure(Glass* glass) {
-  glass->next_figure = glassMakeFigure(randomZeroToMax(FIGURE_MAX));
-  figureRotateN(glass->next_figure,
-                randomZeroToMax(glass->next_figure->max_angle));
-}
-
-void glassDeleteFigure(Glass* glass) {
-  free(glass->figure);
-  glass->figure = 0;
-}
-
-void glassFigureMoveX(Glass* glass, int diff) {
-  if (!glass->figure) {
-    return;
+void Glass::spawnFigure() {
+  figure_ = next_figure_;
+  next_figure_ = figure_factory_->nextFigure();
+  if (figureIntersects()) {
+    throw GlassIsFullException();
   }
-  int left = figureLeft(glass->figure);
-  int right = figureRight(glass->figure);
-  if (diff == 0 || (diff > 0 && GLASS_WIDTH - right <= 1) ||
-      (diff < 0 && left <= 0)) {
+}
+
+bool Glass::figureIntersects() const {
+  if (figure_->bottom() >= height()) {
+    return true;
+  }
+  auto abs_poses = figure_->absolutePoses();
+  for (auto& p : abs_poses) {
+    if (cells_[p.y()][p.x()] != EMPTY_CELL) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void Glass::figureMoveX(int diff) {
+  if (diff == 0 || (diff > 0 && width() - figure_->right() <= 1) ||
+      (diff < 0 && figure_->left() <= 0)) {
     return;
   }
   int step = diff > 0 ? 1 : -1;
-  figureMoveX(glass->figure, step);
-  if (glassFigureIntersects(glass)) {
-    figureMoveX(glass->figure, -step);
+  figure_->moveX(step);
+  if (figureIntersects()) {
+    figure_->moveX(-step);
   } else {
-    glassFigureMoveX(glass, diff - step);
+    figureMoveX(diff - step);
   }
 }
 
-void glassFigureMoveY(Glass* glass, int diff) {
-  if (!glass->figure) {
-    return;
-  }
-  int top = figureTop(glass->figure);
-  int bot = figureBottom(glass->figure);
-  if (diff == 0 || (diff > 0 && GLASS_HEIGHT - bot <= 0) ||
-      (diff < 0 && top <= 0)) {
+void Glass::figureMoveY(int diff) {
+  if (diff == 0 || (diff > 0 && height() - figure_->bottom() <= 0) ||
+      (diff < 0 && figure_->top() <= 0)) {
     return;
   }
   int step = diff > 0 ? 1 : -1;
-  figureMoveY(glass->figure, step);
-  if (glassFigureIntersects(glass)) {
-    figureMoveY(glass->figure, -step);
-    glassGlueFigure(glass);
-    glassDeleteFigure(glass);
+  figure_->moveY(step);
+  if (figureIntersects()) {
+    figure_->moveY(-step);
+    glueFigure();
+    spawnFigure();
   } else {
-    glassFigureMoveY(glass, diff - step);
+    figureMoveY(diff - step);
   }
 }
 
-void glassFigureRotateN(Glass* glass, int angle) {
-  if (!glass->figure)
-    return;
-  figureRotateN(glass->figure, angle);
-  int border_left = figureLeft(glass->figure);
-  int border_right = figureRight(glass->figure);
-  if (border_left < 0) {
-    glassFigureMoveX(glass, -border_left);
+void Glass::figureRotateN(int times) {
+  figure_->rotateN(times);
+  if (figure_->left() < 0) {
+    figureMoveX(-figure_->left());
   }
-  if (border_right >= GLASS_WIDTH) {
-    glassFigureMoveX(glass, GLASS_WIDTH - border_right - 1);
+  if (figure_->right() >= width()) {
+    figureMoveX(width() - figure_->right() - 1);
   }
 }
 
-void glassGlueFigure(Glass* glass) {
-  if (!glass->figure) {
-    return;
-  }
-  for (int i = 0; i != FIGURE_MAX_CELLS; ++i) {
-    Pos abs_pos = posToAbsolutePos(glass->figure->cells[i], glass->figure->pos);
-    glass->cells[abs_pos.y][abs_pos.x] = 1;
+void Glass::glueFigure() {
+  auto abs_poses = figure_->absolutePoses();
+  for (auto& pos : abs_poses) {
+    cells_[pos.y()][pos.x()] = FILLED_CELL;
   }
 }
 
-BOOL glassFigureIntersects(Glass* glass) {
-  if (!glass->figure) {
-    return FALSE;
-  }
-  if (figureBottom(glass->figure) >= GLASS_HEIGHT) {
-    return TRUE;
-  }
-  for (int i = 0; i != FIGURE_MAX_CELLS; ++i) {
-    Pos abs_pos = posToAbsolutePos(glass->figure->cells[i], glass->figure->pos);
-    if (glass->cells[abs_pos.y][abs_pos.x]) {
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
-int glassClearRows(Glass* glass) {
+int Glass::clearRows() {
   int res = 0;
-  for (int row = GLASS_HEIGHT - 1; row != 0; --row) {
-    if (glassRowIsFull(glass, row)) {
-      glassShiftDown(glass, row);
+  for (int row = height() - 1; row != 0; --row) {
+    if (rowIsFull(row)) {
+      shiftDown(row);
       ++res;
       ++row;
     }
@@ -140,31 +104,36 @@ int glassClearRows(Glass* glass) {
   return res;
 }
 
-void glassShiftDown(Glass* glass, int row) {
-  for (int to = row; to != -1; --to) {
-    int from = to - 1;
-    for (int i = 0; i != GLASS_WIDTH; ++i) {
-      glass->cells[to][i] = to == 0 ? 0 : glass->cells[from][i];
-    }
-  }
-}
-
-BOOL glassRowIsFull(Glass* glass, int row) {
-  for (int col = 0; col != GLASS_WIDTH; ++col) {
-    if (!glass->cells[row][col]) {
-      return FALSE;
-    }
-  }
-  return TRUE;
-}
-
-int glassIsClean(Glass* glass) {
-  for (int row = 0; row != GLASS_HEIGHT; ++row) {
-    for (int col = 0; col != GLASS_WIDTH; ++col) {
-      if (glass->cells[row][col]) {
-        return FALSE;
+bool Glass::isClean() const {
+  for (int row = 0; row != height(); ++row) {
+    for (int col = 0; col != width(); ++col) {
+      if (cells_[row][col] != EMPTY_CELL) {
+        return false;
       }
     }
   }
-  return TRUE;
+  return true;
 }
+
+bool Glass::rowIsFull(int row) const {
+  for (int col = 0; col != width(); ++col) {
+    if (cells_[row][col] != FILLED_CELL) {
+      return false;
+    }
+  }
+  return true;
+}
+
+void Glass::shiftDown(int row) {
+  for (int to = row; to != -1; --to) {
+    int from = to - 1;
+    for (int i = 0; i != width(); ++i) {
+      cells_[to][i] =
+          (to == 0) ? EMPTY_CELL
+                    : cells_[from][i];  // (to == 0) ? ... - for topmost row
+    }
+  }
+}
+
+const char Glass::EMPTY_CELL = ' ';
+const char Glass::FILLED_CELL = 'X';

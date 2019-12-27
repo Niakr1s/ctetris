@@ -1,7 +1,11 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#ifdef WIN32
+#include <curses.h>
+#else
 #include <ncurses.h>
+#endif
 
 #include "glass.h"
 

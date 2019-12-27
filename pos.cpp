@@ -29,3 +29,13 @@ int Pos::y() const {
 int Pos::x() const {
   return x_;
 }
+
+void Pos::setY(int y)
+{
+    y_ = y;
+}
+
+void Pos::setX(int x)
+{
+    x_ = x;
+}
