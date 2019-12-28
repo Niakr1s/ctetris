@@ -1,6 +1,6 @@
 #include <curses.h>
 
-#include "game.h"
+#include "tetrisgame.h"
 
 int main() {
   auto game = TetrisGame();

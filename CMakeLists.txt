@@ -3,18 +3,18 @@ cmake_minimum_required(VERSION 3.5)
 project(ctetris LANGUAGES CXX VERSION 17)
 
 set(SRC
-    standardfigure.h
-    standardfigure.cpp
     pos.h
     pos.cpp
+    tetrisfigure.h
+    tetrisfigure.cpp
     glass.h
     glass.cpp
     display.h
     display.cpp
     igame.h
     igame.cpp
-    game.h
-    game.cpp
+    tetrisgame.h
+    tetrisgame.cpp
     rnd.h
     rnd.cpp
     ifigure.h

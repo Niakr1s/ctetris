@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef TETRISGAME_H
+#define TETRISGAME_H
 
 #include <sys/time.h>
 
@@ -38,4 +38,4 @@ class TetrisGame : public IGame {
 long long timeMicroSeconds(struct timeval* time);
 long long timeDelta(struct timeval* beg, struct timeval* end);
 
-#endif  // GAME_H
+#endif  // TETRISGAME_H

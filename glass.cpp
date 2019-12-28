@@ -4,13 +4,13 @@
 
 #include "randomfigurefactory.h"
 #include "rnd.h"
-#include "standardfigure.h"
+#include "tetrisfigure.h"
 
 Glass::Glass(int height, int width)
     : height_(height),
       width_(width),
       figure_center_x(width / 2 - 1),
-      figure_factory_(std::make_shared<RandomFigureFactory<StandardFigure>>()) {
+      figure_factory_(std::make_shared<RandomFigureFactory<TetrisFigure>>()) {
   cells_.resize(height_);
   for (int row = 0; row != height_; ++row) {
     cells_[0].reserve(width_);

@@ -4,6 +4,15 @@
 #include "ifigurefactory.h"
 #include "rnd.h"
 
+/* please, to RandomFigureFactory work with your IFigure child,
+ * provide it with enum class Type and last element of it should be MAX
+ *
+ * example:
+ * enum class Type: int {
+ * ...
+ * MAX
+ * } */
+
 template <typename Figure_T>
 class RandomFigureFactory : public IFigureFactory {
  public:

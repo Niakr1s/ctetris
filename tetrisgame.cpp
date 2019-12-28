@@ -1,4 +1,4 @@
-#include "game.h"
+#include "tetrisgame.h"
 
 #include <time.h>
 
