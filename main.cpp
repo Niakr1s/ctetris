@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <unistd.h>
+#include <curses.h>
 
-#include "display.h"
-#include "figure.h"
 #include "game.h"
-#include "math.h"
-#include "pos.h"
 
 int main() {
-  Game game = makeGame();
-  gameLoop(&game);
-
+  auto game = TetrisGame();
+  game.loop();
   return 0;
 }

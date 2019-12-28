@@ -11,6 +11,8 @@ set(SRC
     glass.cpp
     display.h
     display.cpp
+    igame.h
+    igame.cpp
     game.h
     game.cpp
     rnd.h
@@ -23,10 +25,12 @@ set(SRC
     figurefactory.cpp
     randomfigurefactory.h
     randomfigurefactory.cpp
+    idisplay.h
+    idisplay.cpp
 )
 
 if(WIN32)
-    file(GLOB CURSES ${PDCURSES_LIB_DIR}/*)
+    set(CURSES ${PDCURSES_LIB_DIR}/pdcurses.a)
     include_directories(${PDCURSES_INCLUDE_DIR})
 else()
     set(CURSES ncurses)

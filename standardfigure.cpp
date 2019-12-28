@@ -93,14 +93,14 @@ int StandardFigure::right() const {
 
 int StandardFigure::top() const {
   auto res =
-      std::min_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->x();
+      std::min_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->y();
   res += pos_.y();
   return res;
 }
 
 int StandardFigure::bottom() const {
   auto res =
-      std::max_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->x();
+      std::max_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->y();
   res += pos_.y();
   return res;
 }

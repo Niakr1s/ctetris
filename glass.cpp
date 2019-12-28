@@ -9,6 +9,7 @@
 Glass::Glass(int height, int width)
     : height_(height),
       width_(width),
+      figure_center_x(width / 2 - 1),
       figure_factory_(std::make_shared<RandomFigureFactory<StandardFigure>>()) {
   cells_.resize(height_);
   for (int row = 0; row != height_; ++row) {
@@ -17,8 +18,8 @@ Glass::Glass(int height, int width)
       cells_[row].push_back(EMPTY_CELL);
     }
   }
-  figure_ = figure_factory_->nextFigure();
-  next_figure_ = figure_factory_->nextFigure();
+  spawnNextFigure();
+  spawnFigure();
 }
 
 int Glass::height() const { return height_; }
@@ -26,11 +27,14 @@ int Glass::width() const { return width_; }
 
 void Glass::spawnFigure() {
   figure_ = next_figure_;
-  next_figure_ = figure_factory_->nextFigure();
-  if (figureIntersects()) {
-    throw GlassIsFullException();
+  spawnNextFigure();
+  figure_->setPos(0, figure_center_x);
+  while (figure_->top() < 0) {
+    figure_->moveY(1);
   }
 }
+
+void Glass::spawnNextFigure() { next_figure_ = figure_factory_->nextFigure(); }
 
 bool Glass::figureIntersects() const {
   if (figure_->bottom() >= height()) {
@@ -59,10 +63,10 @@ void Glass::figureMoveX(int diff) {
   }
 }
 
-void Glass::figureMoveY(int diff) {
+bool Glass::figureMoveY(int diff) {
   if (diff == 0 || (diff > 0 && height() - figure_->bottom() <= 0) ||
       (diff < 0 && figure_->top() <= 0)) {
-    return;
+    return false;
   }
   int step = diff > 0 ? 1 : -1;
   figure_->moveY(step);
@@ -70,9 +74,10 @@ void Glass::figureMoveY(int diff) {
     figure_->moveY(-step);
     glueFigure();
     spawnFigure();
-  } else {
-    figureMoveY(diff - step);
+    return true;
   }
+  figureMoveY(diff - step);
+  return false;
 }
 
 void Glass::figureRotateN(int times) {
@@ -83,6 +88,9 @@ void Glass::figureRotateN(int times) {
   if (figure_->right() >= width()) {
     figureMoveX(width() - figure_->right() - 1);
   }
+  if (figure_->top() < 0) {
+    figureMoveY(-figure_->top());
+  }
 }
 
 void Glass::glueFigure() {
@@ -90,6 +98,7 @@ void Glass::glueFigure() {
   for (auto& pos : abs_poses) {
     cells_[pos.y()][pos.x()] = FILLED_CELL;
   }
+  figure_ = nullptr;
 }
 
 int Glass::clearRows() {
@@ -114,6 +123,12 @@ bool Glass::isClean() const {
   }
   return true;
 }
+
+const Glass::Cells& Glass::cells() const { return cells_; }
+
+std::shared_ptr<IFigure> Glass::figure() const { return figure_; }
+
+std::shared_ptr<IFigure> Glass::next_figure() const { return next_figure_; }
 
 bool Glass::rowIsFull(int row) const {
   for (int col = 0; col != width(); ++col) {

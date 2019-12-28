@@ -8,31 +8,39 @@
 #endif
 
 #include "glass.h"
+#include "idisplay.h"
 
-enum {
-  WINS_START_X = 2,
-  WINS_START_Y = 1,
-  BORDER_THICKNESS = 1,
-  RIGHT_WINS_X = WINS_START_X + GLASS_WIDTH + BORDER_THICKNESS * 2 + 2,
-  WIN_INFO_WIDTH = 7 + 9,
-  WIN_INFO_HEIGHT = 1,
-  WIN_INFO_Y = WINS_START_Y,
-  WIN_NEXT_FIGURE_WIDTH = WIN_INFO_WIDTH,
-  WIN_NEXT_FIGURE_HEIGHT = 6,
-  WIN_NEXT_FIGURE_Y = WIN_INFO_Y + WIN_INFO_HEIGHT + BORDER_THICKNESS * 3,
+class Display : public IDisplay {
+ public:
+  Display(int height, int width);
+  ~Display();
+
+  void printGlass(const Glass& glass) override;
+  void printFigure(std::shared_ptr<IFigure> figure) override;
+  void eraseFigure(std::shared_ptr<IFigure> figure) override;
+  void printScore(int score) override;
+  void printNextFigure(std::shared_ptr<IFigure> next_figure) override;
+
+ private:
+  int height_, width_;
+  int RIGHT_WINS_X;
+  WINDOW* glass_win_;
+  WINDOW* info_win_;
+  WINDOW* next_figure_win_;
+
+  static void initInput();
+  static void addTitle(WINDOW* win, const char* title);
+  static void addFrame(WINDOW* win);
+
+  static const int WINS_START_X;
+  static const int WINS_START_Y;
+  static const int BORDER_THICKNESS;
+  static const int WIN_INFO_WIDTH;
+  static const int WIN_INFO_HEIGHT;
+  static const int WIN_INFO_Y;
+  static const int WIN_NEXT_FIGURE_WIDTH;
+  static const int WIN_NEXT_FIGURE_HEIGHT;
+  static const int WIN_NEXT_FIGURE_Y;
 };
-
-WINDOW* newGlassWin(void);
-WINDOW* newInfoWin(void);
-WINDOW* newNextFigureWin(void);
-
-void printGlass(WINDOW* win, Glass* glass);
-void printFrame(WINDOW* win);
-void printInfo(WINDOW* info_win, int score);
-void printNextFigure(WINDOW* next_figure_win, Figure *figure_type);
-
-void addTitle(WINDOW* win, const char* str);
-
-void initInput(void);
 
 #endif  // DISPLAY_H

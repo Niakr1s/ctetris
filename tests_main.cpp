@@ -1,50 +1,26 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "constants.h"
-#include "figure.h"
 #include "glass.h"
 #include "pos.h"
+#include "standardfigure.h"
 
-void glassFigureMoveXTests() {
-  Glass glass = makeGlass();
-  glassSpawnFigure(&glass);
-
-  int diff = 1;
-  Pos from = glass.figure->pos;
-  glassFigureMoveX(&glass, diff);
-  Pos to = glass.figure->pos;
-  assert((from.x + diff) == to.x && from.y == to.y);
-  from = to;
-
-  diff = -2;
-  glassFigureMoveX(&glass, diff);
-  to = glass.figure->pos;
-  assert((from.x + diff) == to.x && from.y == to.y);
-  from = to;
-
-  freeGlass(&glass);
-
-  printf("glassFigureMoveXTests done\n");
+void glassFigureSpawnsAtTopTest() {
+  Glass glass;
+  assert(glass.figure()->top() == 0);
 }
 
-void glassShiftDownTests() {
-  Glass glass = makeGlass();
-  for (int row = 0; row != GLASS_HEIGHT; ++row) {
-    for (int col = 0; col != GLASS_WIDTH; ++col) {
-      glass.cells[row][col] = 1;
-    }
-  }
-  glassClearRows(&glass);
-  assert(glassIsClean(&glass) == TRUE);
-
-  freeGlass(&glass);
-
-  printf("glassShiftDownTests done\n");
+void standardFigureTopLeftDownBottomTest() {
+  StandardFigure fig(StandardFigure::Type::FIGURE_ZIGZAG_RIGHT);
+  fig.setPos(3, 3);
+  assert(fig.left() == 3);
+  assert(fig.right() == 4);
+  assert(fig.top() == 2);
+  assert(fig.bottom() == 4);
 }
 
-int main(int argc, char* argv[]) {
-  glassFigureMoveXTests();
-  glassShiftDownTests();
+int main() {
+  glassFigureSpawnsAtTopTest();
+  standardFigureTopLeftDownBottomTest();
   return 0;
 }

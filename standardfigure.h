@@ -6,6 +6,17 @@
 
 class StandardFigure : public IFigure {
  public:
+  enum class Type : int {
+    FIGURE_LINE,
+    FIGURE_TRIANGLE,
+    FIGURE_BLOCK,
+    FIGURE_ZIGZAG_RIGHT,
+    FIGURE_ZIGZAG_LEFT,
+    FIGURE_G_RIGHT,
+    FIGURE_G_LEFT,
+    MAX,
+  };
+
   StandardFigure(Type type);
 
   // IFigure interface
