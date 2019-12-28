@@ -1,10 +1,10 @@
-#ifndef TETRISFIGURE_H
-#define TETRISFIGURE_H
+#ifndef FIGURE_H
+#define FIGURE_H
 
 #include "ifigure.h"
 #include "pos.h"
 
-class TetrisFigure : public IFigure {
+class Figure : public IFigure {
  public:
   enum class Type : int {
     FIGURE_LINE,
@@ -17,7 +17,7 @@ class TetrisFigure : public IFigure {
     MAX,
   };
 
-  TetrisFigure(Type type);
+  Figure(Type type);
 
   // IFigure interface
  public:
@@ -49,4 +49,4 @@ class TetrisFigure : public IFigure {
 bool pos_compare_x(const Pos& lhs, const Pos& rhs);
 bool pos_compare_y(const Pos& lhs, const Pos& rhs);
 
-#endif  // TETRISFIGURE_H
+#endif  // FIGURE_H

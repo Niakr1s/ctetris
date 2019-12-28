@@ -1,4 +1,4 @@
-#include "tetrisfigure.h"
+#include "figure.h"
 
 #include <algorithm>
 #include <stdexcept>
@@ -6,7 +6,7 @@
 #include "math.h"
 #include "stdlib.h"
 
-TetrisFigure::TetrisFigure(TetrisFigure::Type type)
+Figure::Figure(Figure::Type type)
     : pos_(0, 0), type_(type), current_angle_(0) {
   base_cells_.reserve(5);
   cells_.reserve(5);
@@ -46,9 +46,9 @@ TetrisFigure::TetrisFigure(TetrisFigure::Type type)
   cells_ = base_cells_;
 }
 
-void TetrisFigure::setPos(int y, int x) { pos_ = {y, x}; }
+void Figure::setPos(int y, int x) { pos_ = {y, x}; }
 
-Poses TetrisFigure::absolutePoses() const {
+Poses Figure::absolutePoses() const {
   Poses res;
   for (size_t i = 0; i != size(); ++i) {
     res.push_back(cells_[i] + pos_);
@@ -56,7 +56,7 @@ Poses TetrisFigure::absolutePoses() const {
   return res;
 }
 
-void TetrisFigure::rotateN(int times) {
+void Figure::rotateN(int times) {
   times = simplify(times);
   if (times == 0) {
     return;
@@ -73,45 +73,45 @@ void TetrisFigure::rotateN(int times) {
   rotateN(times - 1);
 }
 
-void TetrisFigure::moveX(int diff) { pos_.moveX(diff); }
+void Figure::moveX(int diff) { pos_.moveX(diff); }
 
-void TetrisFigure::moveY(int diff) { pos_.moveY(diff); }
+void Figure::moveY(int diff) { pos_.moveY(diff); }
 
-int TetrisFigure::left() const {
+int Figure::left() const {
   auto res =
       std::min_element(cells_.cbegin(), cells_.cend(), pos_compare_x)->x();
   res += pos_.x();
   return res;
 }
 
-int TetrisFigure::right() const {
+int Figure::right() const {
   auto res =
       std::max_element(cells_.cbegin(), cells_.cend(), pos_compare_x)->x();
   res += pos_.x();
   return res;
 }
 
-int TetrisFigure::top() const {
+int Figure::top() const {
   auto res =
       std::min_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->y();
   res += pos_.y();
   return res;
 }
 
-int TetrisFigure::bottom() const {
+int Figure::bottom() const {
   auto res =
       std::max_element(cells_.cbegin(), cells_.cend(), pos_compare_y)->y();
   res += pos_.y();
   return res;
 }
 
-int TetrisFigure::currentAngle() const { return current_angle_; }
+int Figure::currentAngle() const { return current_angle_; }
 
-int TetrisFigure::maxAngle() const { return max_angle_; }
+int Figure::maxAngle() const { return max_angle_; }
 
-size_t TetrisFigure::size() const { return cells_.size(); }
+size_t Figure::size() const { return cells_.size(); }
 
-int TetrisFigure::simplify(int times) const {
+int Figure::simplify(int times) const {
   times %= max_angle_;
   while (times < 0) {
     times += max_angle_;

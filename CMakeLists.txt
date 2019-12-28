@@ -5,16 +5,16 @@ project(ctetris LANGUAGES CXX VERSION 17)
 set(SRC
     pos.h
     pos.cpp
-    tetrisfigure.h
-    tetrisfigure.cpp
+    figure.h
+    figure.cpp
     glass.h
     glass.cpp
     display.h
     display.cpp
     igame.h
     igame.cpp
-    tetrisgame.h
-    tetrisgame.cpp
+    game.h
+    game.cpp
     rnd.h
     rnd.cpp
     ifigure.h

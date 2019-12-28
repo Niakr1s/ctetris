@@ -1,5 +1,5 @@
-#ifndef TETRISGAME_H
-#define TETRISGAME_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <sys/time.h>
 
@@ -8,7 +8,7 @@
 #include "igame.h"
 #include "iinputcontroller.h"
 
-class TetrisGame : public IGame {
+class Game : public IGame {
  public:
   enum class Status { RUNNING, END };
 
@@ -17,7 +17,7 @@ class TetrisGame : public IGame {
   static const int GAME_SPEED_AMPLIFY_INTERVAL;
   static const double GAME_SPEED_AMPLIFY_MULTIPLIER;
 
-  TetrisGame();
+  Game();
 
   void loop() override;
 
@@ -40,4 +40,4 @@ class TetrisGame : public IGame {
 long long timeMicroSeconds(struct timeval* time);
 long long timeDelta(struct timeval* beg, struct timeval* end);
 
-#endif  // TETRISGAME_H
+#endif  // GAME_H

@@ -1,4 +1,4 @@
-#include "tetrisgame.h"
+#include "game.h"
 
 #include <time.h>
 
@@ -7,7 +7,7 @@
 
 #include "keyboardcontroller.h"
 
-TetrisGame::TetrisGame()
+Game::Game()
     : glass_(),
       status_(Status::RUNNING),
       score_(0),
@@ -15,7 +15,7 @@ TetrisGame::TetrisGame()
       display_(std::make_shared<Display>(glass_.height(), glass_.width())),
       input_(std::make_shared<KeyboardController>()) {}
 
-void TetrisGame::loop() {
+void Game::loop() {
   display_->printGlass(glass_);
   display_->printScore(score_);
   display_->printNextFigure(glass_.next_figure());
@@ -76,7 +76,7 @@ void TetrisGame::loop() {
   }
 }
 
-bool TetrisGame::tryMoveDown(timeval* move_down_time, timeval* current_time) {
+bool Game::tryMoveDown(timeval* move_down_time, timeval* current_time) {
   if (move_down_time == nullptr || current_time == nullptr ||
       timeDelta(move_down_time, current_time) >= speed_) {
     bool glued = glass_.figureMoveY(1);
@@ -91,7 +91,7 @@ bool TetrisGame::tryMoveDown(timeval* move_down_time, timeval* current_time) {
   return false;
 }
 
-bool TetrisGame::trySpeedUp(timeval* speed_amplify_time,
+bool Game::trySpeedUp(timeval* speed_amplify_time,
                             timeval* current_time) {
   if (timeDelta(speed_amplify_time, current_time) >=
       GAME_SPEED_AMPLIFY_INTERVAL) {
@@ -102,13 +102,13 @@ bool TetrisGame::trySpeedUp(timeval* speed_amplify_time,
   return false;
 }
 
-const int TetrisGame::SECOND = 1000000LL;
-const int TetrisGame::GAME_DEFAULT_SPEED = SECOND;
-const int TetrisGame::GAME_SPEED_AMPLIFY_INTERVAL = SECOND * 30;
-const double TetrisGame::GAME_SPEED_AMPLIFY_MULTIPLIER = 0.9;
+const int Game::SECOND = 1000000LL;
+const int Game::GAME_DEFAULT_SPEED = SECOND;
+const int Game::GAME_SPEED_AMPLIFY_INTERVAL = SECOND * 30;
+const double Game::GAME_SPEED_AMPLIFY_MULTIPLIER = 0.9;
 
 long long timeMicroSeconds(struct timeval* time) {
-  return (((long long)time->tv_sec) * TetrisGame::SECOND +
+  return (((long long)time->tv_sec) * Game::SECOND +
           (long long)(time->tv_usec));
 }
 

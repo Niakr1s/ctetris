@@ -1,9 +1,9 @@
 #include <curses.h>
 
-#include "tetrisgame.h"
+#include "game.h"
 
 int main() {
-  auto game = TetrisGame();
+  auto game = Game();
   game.loop();
   return 0;
 }
