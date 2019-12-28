@@ -1,5 +1,5 @@
 # ctetris
-Simple console tetris, written in pure C with ncurses library.
+Simple console tetris, written in C++ with ncurses (linux) / pdcurses (windows) library.
 
 
 [![Example video](https://asciinema.org/a/288297.svg)](https://asciinema.org/a/288297)
