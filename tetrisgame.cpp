@@ -5,12 +5,15 @@
 #include <chrono>
 #include <thread>
 
+#include "keyboardcontroller.h"
+
 TetrisGame::TetrisGame()
     : glass_(),
       status_(Status::RUNNING),
       score_(0),
       speed_(GAME_DEFAULT_SPEED),
-      display_(std::make_shared<Display>(glass_.height(), glass_.width())) {}
+      display_(std::make_shared<Display>(glass_.height(), glass_.width())),
+      input_(std::make_shared<KeyboardController>()) {}
 
 void TetrisGame::loop() {
   display_->printGlass(glass_);
@@ -21,7 +24,6 @@ void TetrisGame::loop() {
   gettimeofday(&speed_amplify_time, 0);
   gettimeofday(&move_down_time, 0);
 
-  int ch;
   while (status_ == Status::RUNNING) {
     if (glass_.figureIntersects()) {
       status_ = Status::END;
@@ -31,27 +33,30 @@ void TetrisGame::loop() {
     tryMoveDown(&move_down_time, &current_time);
     trySpeedUp(&speed_amplify_time, &current_time);
 
-    if ((ch = getch()) != ERR) {
-      need_reprint_glass_ = TRUE;
-      switch (ch) {
-        case (KEY_RIGHT):
-          glass_.figureMoveX(1);
-          break;
-        case (KEY_LEFT):
-          glass_.figureMoveX(-1);
-          break;
-        case (KEY_DOWN):
-          tryMoveDown();
-          break;
-        case (' '):
-          glass_.figureRotateN(1);
-          break;
-        case ('q'):
-        case ('Q'):
-          status_ = Status::END;
-          break;
-      }
+    switch (input_->getKey()) {
+      case (IInputController::Key::DOWN):
+        need_reprint_glass_ = true;
+        tryMoveDown();
+        break;
+      case (IInputController::Key::LEFT):
+        need_reprint_glass_ = true;
+        glass_.figureMoveX(-1);
+        break;
+      case (IInputController::Key::RIGHT):
+        need_reprint_glass_ = true;
+        glass_.figureMoveX(1);
+        break;
+      case (IInputController::Key::ROTATE):
+        need_reprint_glass_ = true;
+        glass_.figureRotateN(1);
+        break;
+      case (IInputController::Key::QUIT):
+        status_ = Status::END;
+        break;
+      default:
+        break;
     }
+
     if (need_clear_rows_) {
       int cleared_rows = glass_.clearRows();
       if (cleared_rows) {

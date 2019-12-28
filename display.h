@@ -28,7 +28,6 @@ class Display : public IDisplay {
   WINDOW* info_win_;
   WINDOW* next_figure_win_;
 
-  static void initInput();
   static void addTitle(WINDOW* win, const char* title);
   static void addFrame(WINDOW* win);
 

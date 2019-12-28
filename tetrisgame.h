@@ -6,6 +6,7 @@
 #include "display.h"
 #include "glass.h"
 #include "igame.h"
+#include "iinputcontroller.h"
 
 class TetrisGame : public IGame {
  public:
@@ -26,6 +27,7 @@ class TetrisGame : public IGame {
   int score_;
   int speed_;
   std::shared_ptr<IDisplay> display_;
+  std::shared_ptr<IInputController> input_;
   bool need_reprint_glass_ = false, need_clear_rows_ = false,
        need_reprint_next_figure_ = false;
 

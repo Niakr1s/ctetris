@@ -27,6 +27,10 @@ set(SRC
     randomfigurefactory.cpp
     idisplay.h
     idisplay.cpp
+    iinputcontroller.h
+    iinputcontroller.cpp
+    keyboardcontroller.h
+    keyboardcontroller.cpp
 )
 
 if(WIN32)

@@ -7,7 +7,8 @@ Display::Display(int height, int width)
       width_(width),
       RIGHT_WINS_X(WINS_START_X + width + BORDER_THICKNESS * 2 + 2) {
   initscr();
-  initInput();
+  curs_set(0);
+  noecho();
 
   glass_win_ = newwin(height, width, WINS_START_Y, WINS_START_X);
   info_win_ =
@@ -63,13 +64,6 @@ void Display::printNextFigure(std::shared_ptr<IFigure> next_figure) {
              '0');
   }
   wrefresh(next_figure_win_);
-}
-
-void Display::initInput() {
-  curs_set(0);
-  noecho();
-  keypad(stdscr, TRUE);
-  nodelay(stdscr, TRUE);
 }
 
 void Display::addTitle(WINDOW* win, const char* title) {
