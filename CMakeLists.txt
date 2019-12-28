@@ -31,6 +31,7 @@ set(SRC
     iinputcontroller.cpp
     keyboardcontroller.h
     keyboardcontroller.cpp
+    platform_specific.h
 )
 
 if(WIN32)

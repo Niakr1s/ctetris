@@ -1,6 +1,6 @@
 #include "keyboardcontroller.h"
 
-#include "curses.h"
+#include "platform_specific.h"
 
 KeyboardController::KeyboardController() {
   keypad(stdscr, TRUE);
