@@ -83,15 +83,7 @@ bool Glass::figureMoveY(int diff) {
 
 void Glass::figureRotateN(int times) {
   figure_->rotateN(times);
-  if (figure_->left() < 0) {
-    figureMoveX(-figure_->left());
-  }
-  if (figure_->right() >= width()) {
-    figureMoveX(width() - figure_->right() - 1);
-  }
-  if (figure_->top() < 0) {
-    figureMoveY(-figure_->top());
-  }
+  figureMoveInside();
 }
 
 void Glass::glueFigure() {
@@ -149,6 +141,21 @@ void Glass::shiftDown(int row) {
           (to == 0) ? EMPTY_CELL
                     : cells_[from][i];  // (to == 0) ? ... - for topmost row
     }
+  }
+}
+
+void Glass::figureMoveInside() {
+  auto left = figure_->left();
+  auto right = figure_->right();
+  auto top = figure_->top();
+  if (left < 0) {
+    figure_->moveX(-left);
+  }
+  if (right >= width()) {
+    figure_->moveX(width() - right - 1);
+  }
+  if (top < 0) {
+    figure_->moveX(-top);
   }
 }
 

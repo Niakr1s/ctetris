@@ -45,6 +45,7 @@ class Glass {
 
   bool rowIsFull(int row) const;
   void shiftDown(int row);
+  void figureMoveInside();
 
   void incrColor();
 };
