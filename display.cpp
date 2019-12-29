@@ -30,7 +30,6 @@ void Display::printGlass(const Glass& glass) {
       mvwaddch(glass_win_, row, col, glass.cells()[row][col]);
     }
   }
-  printFigure(glass.figure());
 }
 
 void Display::printFigure(std::shared_ptr<IFigure> figure) {

@@ -17,6 +17,10 @@ class Game : public IGame {
   static const int GAME_SPEED_AMPLIFY_INTERVAL;
   static const double GAME_SPEED_AMPLIFY_MULTIPLIER;
 
+  struct NeedReprint {
+    bool glass = false, next_figure = false, figure = false;
+  };
+
   Game();
 
   void loop() override;
@@ -28,12 +32,15 @@ class Game : public IGame {
   int speed_;
   std::shared_ptr<IDisplay> display_;
   std::shared_ptr<IInputController> input_;
-  bool need_reprint_glass_ = false, need_clear_rows_ = false,
-       need_reprint_next_figure_ = false;
+  NeedReprint need_reprint_;
+  bool need_clear_rows_ = false;
 
   void parseInput();
   void runningLoop(timeval& speed_amplify_time, timeval& move_down_time);
   void pauseLoop();
+
+  void reprint();
+  void clearRows();
 
   bool tryMoveDown(struct timeval* move_down_time = nullptr,
                    struct timeval* current_time = nullptr);

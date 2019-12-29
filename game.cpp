@@ -20,6 +20,7 @@ Game::Game()
 void Game::loop() {
   display_->printGlass(glass_);
   display_->printScore(score_);
+  display_->printFigure(glass_.figure());
   display_->printNextFigure(glass_.next_figure());
 
   struct timeval speed_amplify_time, move_down_time;
@@ -36,31 +37,33 @@ void Game::loop() {
 }
 
 void Game::parseInput() {
-  switch (input_->getKey()) {
-    case (IInputController::Key::DOWN):
-      need_reprint_glass_ = true;
-      tryMoveDown();
-      break;
-    case (IInputController::Key::LEFT):
-      need_reprint_glass_ = true;
-      glass_.figureMoveX(-1);
-      break;
-    case (IInputController::Key::RIGHT):
-      need_reprint_glass_ = true;
-      glass_.figureMoveX(1);
-      break;
-    case (IInputController::Key::ROTATE):
-      need_reprint_glass_ = true;
-      glass_.figureRotateN(1);
-      break;
-    case (IInputController::Key::QUIT):
-      status_ = Status::END;
-      break;
-    case (IInputController::Key::PAUSE):
-      status_ = Status::PAUSE;
-      break;
-    default:
-      break;
+  auto key = input_->getKey();
+  if (key != IInputController::Key::NOTHING) {
+    display_->eraseFigure(glass_.figure());
+    need_reprint_.figure = true;
+    need_reprint_.glass = true;
+    switch (key) {
+      case (IInputController::Key::DOWN):
+        tryMoveDown();
+        break;
+      case (IInputController::Key::LEFT):
+        glass_.figureMoveX(-1);
+        break;
+      case (IInputController::Key::RIGHT):
+        glass_.figureMoveX(1);
+        break;
+      case (IInputController::Key::ROTATE):
+        glass_.figureRotateN(1);
+        break;
+      case (IInputController::Key::QUIT):
+        status_ = Status::END;
+        break;
+      case (IInputController::Key::PAUSE):
+        status_ = Status::PAUSE;
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -70,29 +73,18 @@ void Game::runningLoop(struct timeval& speed_amplify_time,
     status_ = Status::END;
     return;
   }
+
   struct timeval current_time;
   gettimeofday(&current_time, 0);
-  bool moved_down = tryMoveDown(&move_down_time, &current_time);
+
+  tryMoveDown(&move_down_time, &current_time);
   trySpeedUp(&speed_amplify_time, &current_time);
 
-  if (!moved_down) {
-    parseInput();
-  }
+  parseInput();
 
-  if (need_clear_rows_) {
-    int cleared_rows = glass_.clearRows();
-    if (cleared_rows) {
-      score_ += cleared_rows * 100;
-      display_->printScore(score_);
-      need_reprint_glass_ = true;
-    }
-  }
-  if (need_reprint_glass_) {
-    display_->printGlass(glass_);
-  }
-  if (need_reprint_next_figure_) {
-    display_->printNextFigure(glass_.next_figure());
-  }
+  clearRows();
+  reprint();
+
   std::this_thread::sleep_for(10ms);
 }
 
@@ -114,13 +106,41 @@ void Game::pauseLoop() {
   }
 }
 
+void Game::reprint() {
+  if (need_reprint_.glass) {
+    display_->printGlass(glass_);
+  }
+  if (need_reprint_.next_figure) {
+    display_->printNextFigure(glass_.next_figure());
+  }
+  if (need_reprint_.figure) {
+    display_->printFigure(glass_.figure());
+  }
+  need_reprint_ = NeedReprint();
+}
+
+void Game::clearRows() {
+  if (need_clear_rows_) {
+    int cleared_rows = glass_.clearRows();
+    if (cleared_rows) {
+      score_ += cleared_rows * 100;
+      display_->printScore(score_);
+      need_reprint_.glass = true;
+    }
+  }
+
+  need_clear_rows_ = false;
+}
+
 bool Game::tryMoveDown(timeval* move_down_time, timeval* current_time) {
   if (move_down_time == nullptr || current_time == nullptr ||
       timeDelta(move_down_time, current_time) >= speed_) {
+    display_->eraseFigure(glass_.figure());
     bool glued = glass_.figureMoveY(1);
     need_clear_rows_ |= glued;
-    need_reprint_next_figure_ |= glued;
-    need_reprint_glass_ = true;
+    need_reprint_.next_figure |= glued;
+    need_reprint_.glass |= glued;
+    need_reprint_.figure = true;
     if (move_down_time != nullptr && current_time != nullptr) {
       *move_down_time = *current_time;
     }
