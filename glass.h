@@ -12,7 +12,7 @@ class Glass {
  public:
   using Cells = std::vector<std::vector<char>>;
 
-  Glass(int height = 20, int width = 14);
+  Glass(int height, int width);
 
   int height() const;
   int width() const;

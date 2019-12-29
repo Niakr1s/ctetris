@@ -16,6 +16,9 @@ class Display : public IDisplay {
   void printScore(int score) override;
   void printNextFigure(std::shared_ptr<IFigure> next_figure) override;
 
+  int height() const override;
+  int width() const override;
+
  private:
   int height_, width_;
   int RIGHT_WINS_X;

@@ -22,6 +22,8 @@ class Game : public IGame {
   };
 
   Game();
+  Game(std::shared_ptr<IDisplay> display,
+       std::shared_ptr<IInputController> input);
 
   void loop() override;
 

@@ -65,6 +65,10 @@ void Display::printNextFigure(std::shared_ptr<IFigure> next_figure) {
   wrefresh(next_figure_win_);
 }
 
+int Display::height() const { return height_; }
+
+int Display::width() const { return width_; }
+
 void Display::addTitle(WINDOW* win, const char* title) {
   int y, x;
   getbegyx(win, y, x);

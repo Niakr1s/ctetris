@@ -10,6 +10,9 @@ class IDisplay {
   virtual void eraseFigure(std::shared_ptr<IFigure> figure) = 0;
   virtual void printScore(int score) = 0;
   virtual void printNextFigure(std::shared_ptr<IFigure> next_figure) = 0;
+
+  virtual int height() const = 0;
+  virtual int width() const = 0;
 };
 
 #endif  // IDISPLAY_H

@@ -3,6 +3,7 @@
 #include "platform_specific.h"
 
 KeyboardController::KeyboardController() {
+  initscr();
   keypad(stdscr, TRUE);
   nodelay(stdscr, TRUE);
 }

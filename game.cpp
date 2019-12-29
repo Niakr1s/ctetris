@@ -10,12 +10,17 @@
 using namespace std::chrono_literals;
 
 Game::Game()
-    : glass_(),
+    : Game(std::make_shared<Display>(20, 14),
+           std::make_shared<KeyboardController>()) {}
+
+Game::Game(std::shared_ptr<IDisplay> display,
+           std::shared_ptr<IInputController> input)
+    : glass_(display->height(), display->width()),
       status_(Status::RUNNING),
       score_(0),
       speed_(GAME_DEFAULT_SPEED),
-      display_(std::make_shared<Display>(glass_.height(), glass_.width())),
-      input_(std::make_shared<KeyboardController>()) {}
+      display_(display),
+      input_(input) {}
 
 void Game::loop() {
   display_->printGlass(glass_);
