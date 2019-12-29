@@ -34,6 +34,8 @@ set(SRC
     keyboardcontroller.h
     keyboardcontroller.cpp
     platform_specific.h
+    gamefactory.h
+    gamefactory.cpp
 )
 
 if(WIN32)
