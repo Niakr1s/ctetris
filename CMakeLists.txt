@@ -11,6 +11,8 @@ set(SRC
     glass.cpp
     consoledisplay.h
     consoledisplay.cpp
+    consoledisplaycolored.h
+    consoledisplaycolored.cpp
     igame.h
     igame.cpp
     game.h

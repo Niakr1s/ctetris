@@ -19,7 +19,7 @@ class ConsoleDisplay : public IDisplay {
   int height() const override;
   int width() const override;
 
- private:
+ protected:
   int height_, width_;
   int RIGHT_WINS_X;
   WINDOW* glass_win_;

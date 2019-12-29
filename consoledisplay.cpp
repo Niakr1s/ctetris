@@ -30,6 +30,7 @@ void ConsoleDisplay::printGlass(const Glass& glass) {
       mvwaddch(glass_win_, row, col, glass.cells()[row][col]);
     }
   }
+  wrefresh(glass_win_);
 }
 
 void ConsoleDisplay::printFigure(std::shared_ptr<IFigure> figure) {

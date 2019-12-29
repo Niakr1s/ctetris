@@ -33,6 +33,8 @@ class Glass {
   std::shared_ptr<IFigure> figure() const;
   std::shared_ptr<IFigure> next_figure() const;
 
+  static const char EMPTY_CELL;
+
  private:
   int height_, width_, figure_center_x;
   Cells cells_;
@@ -45,8 +47,6 @@ class Glass {
   void shiftDown(int row);
 
   void incrColor();
-
-  static const char EMPTY_CELL;
 };
 
 #endif  // GLASS_H
