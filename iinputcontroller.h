@@ -9,6 +9,7 @@ class IInputController {
     DOWN,
     ROTATE,
     QUIT,
+    PAUSE,
     NOTHING,
   };
 

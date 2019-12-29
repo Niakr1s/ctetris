@@ -10,7 +10,7 @@
 
 class Game : public IGame {
  public:
-  enum class Status { RUNNING, END };
+  enum class Status { RUNNING, PAUSE, END };
 
   static const int SECOND;
   static const int GAME_DEFAULT_SPEED;
@@ -30,6 +30,10 @@ class Game : public IGame {
   std::shared_ptr<IInputController> input_;
   bool need_reprint_glass_ = false, need_clear_rows_ = false,
        need_reprint_next_figure_ = false;
+
+  void parseInput();
+  void runningLoop(timeval& speed_amplify_time, timeval& move_down_time);
+  void pauseLoop();
 
   bool tryMoveDown(struct timeval* move_down_time = nullptr,
                    struct timeval* current_time = nullptr);

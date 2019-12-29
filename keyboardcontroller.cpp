@@ -27,6 +27,10 @@ IInputController::Key KeyboardController::getKey() {
       case ('Q'):
         return Key::QUIT;
         break;
+      case ('p'):
+      case ('P'):
+        return Key::PAUSE;
+        break;
     }
   }
   return Key::NOTHING;
