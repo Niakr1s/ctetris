@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 
-#include "figurefactory.h"
 #include "ifigure.h"
+#include "ifigurefactory.h"
 #include "pos.h"
 
 class Glass {

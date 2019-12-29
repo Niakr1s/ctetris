@@ -13,8 +13,6 @@ set(SRC
     consoledisplay.cpp
     consoledisplaycolored.h
     consoledisplaycolored.cpp
-    igame.h
-    igame.cpp
     game.h
     game.cpp
     rnd.h
@@ -23,8 +21,6 @@ set(SRC
     ifigure.cpp
     ifigurefactory.h
     ifigurefactory.cpp
-    figurefactory.h
-    figurefactory.cpp
     randomfigurefactory.h
     randomfigurefactory.cpp
     idisplay.h

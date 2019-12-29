@@ -5,10 +5,9 @@
 
 #include "consoledisplay.h"
 #include "glass.h"
-#include "igame.h"
 #include "iinputcontroller.h"
 
-class Game : public IGame {
+class Game {
  public:
   enum class Status { RUNNING, PAUSE, END };
 
@@ -25,7 +24,7 @@ class Game : public IGame {
   Game(std::shared_ptr<IDisplay> display,
        std::shared_ptr<IInputController> input);
 
-  void loop() override;
+  void loop();
 
  private:
   Glass glass_;
