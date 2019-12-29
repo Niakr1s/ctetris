@@ -14,7 +14,7 @@ Where:
             << std::endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   GameFactory::Settings settings;
 
   for (int i = 1; i != argc; ++i) {
@@ -31,8 +31,14 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  auto game = GameFactory::makeGame(settings);
-  game.loop();
+  try {
+    auto game = GameFactory::makeGame(settings);
+    game.loop();
+  } catch (std::invalid_argument& e) {
+    std::cout << e.what() << "\n";
+    usage();
+    return 1;
+  }
 
   return 0;
 }
