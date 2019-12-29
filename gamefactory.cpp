@@ -2,8 +2,8 @@
 
 #include "consoledisplay.h"
 #include "consoledisplaycolored.h"
+#include "consolekeyboardcontroller.h"
 #include "cstring"
-#include "keyboardcontroller.h"
 
 Game GameFactory::makeGame(const Settings &settings) {
   std::shared_ptr<IDisplay> display;
@@ -22,8 +22,10 @@ Game GameFactory::makeGame(const Settings &settings) {
   std::shared_ptr<IInputController> input;
   if (settings.input.empty()) {
     input = defaultInput();
-  } else if (settings.input == "keyboard") {
-    input = std::make_shared<KeyboardController>();
+  } else if (settings.display == "console") {
+    if (settings.input == "keyboard") {
+      input = std::make_shared<ConsoleKeyboardController>();
+    }
   } else {
     throw(std::invalid_argument("GameFactory::makeGame: wrong input"));
   }
@@ -33,7 +35,7 @@ Game GameFactory::makeGame(const Settings &settings) {
 }
 
 std::shared_ptr<IInputController> GameFactory::defaultInput() {
-  return std::make_shared<KeyboardController>();
+  return std::make_shared<ConsoleKeyboardController>();
 }
 
 std::shared_ptr<IDisplay> GameFactory::defaultDisplay() {

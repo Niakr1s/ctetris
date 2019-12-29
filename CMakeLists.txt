@@ -31,8 +31,8 @@ set(SRC
     idisplay.cpp
     iinputcontroller.h
     iinputcontroller.cpp
-    keyboardcontroller.h
-    keyboardcontroller.cpp
+    consolekeyboardcontroller.h
+    consolekeyboardcontroller.cpp
     platform_specific.h
     gamefactory.h
     gamefactory.cpp

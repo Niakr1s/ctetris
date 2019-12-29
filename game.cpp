@@ -5,13 +5,13 @@
 #include <chrono>
 #include <thread>
 
-#include "keyboardcontroller.h"
+#include "consolekeyboardcontroller.h"
 
 using namespace std::chrono_literals;
 
 Game::Game()
     : Game(std::make_shared<ConsoleDisplay>(20, 14),
-           std::make_shared<KeyboardController>()) {}
+           std::make_shared<ConsoleKeyboardController>()) {}
 
 Game::Game(std::shared_ptr<IDisplay> display,
            std::shared_ptr<IInputController> input)

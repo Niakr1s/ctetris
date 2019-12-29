@@ -3,9 +3,9 @@
 
 #include "iinputcontroller.h"
 
-class KeyboardController : public IInputController {
+class ConsoleKeyboardController : public IInputController {
  public:
-  KeyboardController();
+  ConsoleKeyboardController();
 
   Key getKey() override;
 };

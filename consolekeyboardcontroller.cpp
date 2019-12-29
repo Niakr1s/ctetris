@@ -1,14 +1,14 @@
-#include "keyboardcontroller.h"
+#include "consolekeyboardcontroller.h"
 
 #include "platform_specific.h"
 
-KeyboardController::KeyboardController() {
+ConsoleKeyboardController::ConsoleKeyboardController() {
   initscr();
   keypad(stdscr, TRUE);
   nodelay(stdscr, TRUE);
 }
 
-IInputController::Key KeyboardController::getKey() {
+IInputController::Key ConsoleKeyboardController::getKey() {
   int ch;
   if ((ch = getch()) != ERR) {
     switch (ch) {
