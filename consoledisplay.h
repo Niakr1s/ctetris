@@ -5,10 +5,10 @@
 #include "idisplay.h"
 #include "platform_specific.h"
 
-class Display : public IDisplay {
+class ConsoleDisplay : public IDisplay {
  public:
-  Display(int height, int width);
-  ~Display();
+  ConsoleDisplay(int height, int width);
+  ~ConsoleDisplay();
 
   void printGlass(const Glass& glass) override;
   void printFigure(std::shared_ptr<IFigure> figure) override;

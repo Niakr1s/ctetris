@@ -9,8 +9,8 @@ set(SRC
     figure.cpp
     glass.h
     glass.cpp
-    display.h
-    display.cpp
+    consoledisplay.h
+    consoledisplay.cpp
     igame.h
     igame.cpp
     game.h

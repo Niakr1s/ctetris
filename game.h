@@ -3,7 +3,7 @@
 
 #include <sys/time.h>
 
-#include "display.h"
+#include "consoledisplay.h"
 #include "glass.h"
 #include "igame.h"
 #include "iinputcontroller.h"

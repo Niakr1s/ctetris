@@ -10,7 +10,7 @@
 using namespace std::chrono_literals;
 
 Game::Game()
-    : Game(std::make_shared<Display>(20, 14),
+    : Game(std::make_shared<ConsoleDisplay>(20, 14),
            std::make_shared<KeyboardController>()) {}
 
 Game::Game(std::shared_ptr<IDisplay> display,
