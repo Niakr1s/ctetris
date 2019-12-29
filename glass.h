@@ -36,6 +36,7 @@ class Glass {
  private:
   int height_, width_, figure_center_x;
   Cells cells_;
+  char color_;  // when glued, figure becomes colored with numbers 1..=9
   std::shared_ptr<IFigure> figure_;
   std::shared_ptr<IFigure> next_figure_;
   std::shared_ptr<IFigureFactory> figure_factory_;
@@ -43,8 +44,9 @@ class Glass {
   bool rowIsFull(int row) const;
   void shiftDown(int row);
 
+  void incrColor();
+
   static const char EMPTY_CELL;
-  static const char FILLED_CELL;
 };
 
 #endif  // GLASS_H

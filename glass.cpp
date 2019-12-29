@@ -10,6 +10,7 @@ Glass::Glass(int height, int width)
     : height_(height),
       width_(width),
       figure_center_x(width / 2 - 1),
+      color_('1'),
       figure_factory_(std::make_shared<RandomFigureFactory<Figure>>()) {
   cells_.resize(height_);
   for (int row = 0; row != height_; ++row) {
@@ -96,8 +97,9 @@ void Glass::figureRotateN(int times) {
 void Glass::glueFigure() {
   auto abs_poses = figure_->absolutePoses();
   for (auto& pos : abs_poses) {
-    cells_[pos.y()][pos.x()] = FILLED_CELL;
+    cells_[pos.y()][pos.x()] = color_;
   }
+  incrColor();
   figure_ = nullptr;
 }
 
@@ -132,7 +134,7 @@ std::shared_ptr<IFigure> Glass::next_figure() const { return next_figure_; }
 
 bool Glass::rowIsFull(int row) const {
   for (int col = 0; col != width(); ++col) {
-    if (cells_[row][col] != FILLED_CELL) {
+    if (cells_[row][col] == EMPTY_CELL) {
       return false;
     }
   }
@@ -150,5 +152,10 @@ void Glass::shiftDown(int row) {
   }
 }
 
+void Glass::incrColor() {
+  if (color_++ == '9') {
+    color_ = '1';
+  }
+}
+
 const char Glass::EMPTY_CELL = ' ';
-const char Glass::FILLED_CELL = 'X';
