@@ -31,14 +31,17 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  Game game;
+
   try {
-    auto game = GameFactory::makeGame(settings);
-    game.loop();
+    game = GameFactory::makeGame(settings);
   } catch (std::invalid_argument& e) {
     std::cout << e.what() << "\n";
     usage();
     return 1;
   }
+
+  game.loop();
 
   return 0;
 }
