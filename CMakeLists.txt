@@ -39,10 +39,10 @@ set(SRC
 )
 
 if(WIN32)
-    set(CURSES ${PDCURSES_LIB_DIR}/pdcurses.a)
+    set(CTETRIS_LINK_LIBS ${PDCURSES_LIB_DIR}/pdcurses.a)
     include_directories(${PDCURSES_INCLUDE_DIR})
 else()
-    set(CURSES ncurses)
+    set(CTETRIS_LINK_LIBS ncurses pthread)
 endif()
 
 add_executable(ctetris
@@ -51,7 +51,7 @@ add_executable(ctetris
 )
 
 target_link_libraries(ctetris
-    ${CURSES}
+    ${CTETRIS_LINK_LIBS}
 )
 
 if (WITH_TESTS)
@@ -61,6 +61,6 @@ add_executable(tests
 )
 
 target_link_libraries(tests
-    ${CURSES}
+    ${CTETRIS_LINK_LIBS}
 )
 endif ()
