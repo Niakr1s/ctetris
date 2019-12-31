@@ -42,7 +42,7 @@ void RunningGameState::doParseInput(IInputController::Key key) {
     default:
       break;
   }
-  game_->reprint();
+  game_->reprintIfNeeded();
 }
 
 PausedGameState::PausedGameState(Game *game) : GameState(game) {}

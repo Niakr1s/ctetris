@@ -40,7 +40,7 @@ void Game::parseInput(IInputController::Key key) {
 
 bool Game::active() const { return active_; }
 
-void Game::reprint() {
+void Game::reprintIfNeeded() {
   if (need_reprint_.glass) {
     display_->printGlass(glass_);
   }

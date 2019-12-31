@@ -42,7 +42,7 @@ class Game {
   bool need_clear_rows_ = false;
   Timer speedup_timer_, movedown_timer_;
 
-  void reprint();
+  void reprintIfNeeded();
   void reprintAll();
   bool clearRows();
 
