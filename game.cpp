@@ -24,17 +24,13 @@ Game::Game(std::shared_ptr<IDisplay> display,
       speedup_timer_(30s),
       movedown_timer_(1s) {
   input_->setGame(this);
-  input_->startPolling();
   movedown_timer_.start([this] { parseInput(IInputController::Key::DOWN); });
   speedup_timer_.start([this] { speedUp(); });
 }
 
 void Game::start() {
   reprintAll();
-
-  while (status_ != Status::END) {
-    std::this_thread::sleep_for(1s);
-  }
+  input_->startPolling();
 }
 
 Game::Status Game::status() const { return status_; }
