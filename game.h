@@ -47,7 +47,4 @@ class Game {
   void speedUp();
 };
 
-long long timeMicroSeconds(struct timeval* time);
-long long timeDelta(struct timeval* beg, struct timeval* end);
-
 #endif  // GAME_H
