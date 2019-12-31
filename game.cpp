@@ -7,6 +7,7 @@
 #include <thread>
 
 #include "consolekeyboardcontroller.h"
+#include "gamestate.h"
 
 using namespace std::chrono_literals;
 
@@ -17,12 +18,12 @@ Game::Game()
 Game::Game(std::shared_ptr<IDisplay> display,
            std::shared_ptr<IInputController> input)
     : glass_(display->height(), display->width()),
-      status_(Status::RUNNING),
       score_(0),
       display_(display),
       input_(input),
       speedup_timer_(30s),
       movedown_timer_(1s) {
+  setGamestate<RunningGameState>();
   input_->setGame(this);
   movedown_timer_.start([this] { parseInput(IInputController::Key::DOWN); });
   speedup_timer_.start([this] { speedUp(); });
@@ -33,57 +34,11 @@ void Game::start() {
   input_->startPolling();
 }
 
-Game::Status Game::status() const { return status_; }
-
 void Game::parseInput(IInputController::Key key) {
-  if (key != IInputController::Key::NOTHING) {
-    display_->eraseFigure(glass_.figure());
-    need_reprint_.figure = true;
-    need_reprint_.glass = true;
-    switch (key) {
-      case (IInputController::Key::DOWN):
-        moveDown();
-        clearRows();
-        break;
-      case (IInputController::Key::LEFT):
-        glass_.figureMoveX(-1);
-        break;
-      case (IInputController::Key::RIGHT):
-        glass_.figureMoveX(1);
-        break;
-      case (IInputController::Key::ROTATE):
-        glass_.figureRotateN(1);
-        break;
-      case (IInputController::Key::QUIT):
-        status_ = Status::END;
-        break;
-      case (IInputController::Key::PAUSE):
-        status_ = Status::PAUSE;
-        break;
-      default:
-        break;
-    }
-    reprint();
-  }
+  gamestate_->parseInput(key);
 }
 
-void Game::pauseLoop() {
-  while (true) {
-    switch (input_->getKey()) {
-      case (IInputController::Key::PAUSE):
-        status_ = Status::RUNNING;
-        return;
-        break;
-      case (IInputController::Key::QUIT):
-        status_ = Status::END;
-        return;
-        break;
-      default:
-        break;
-    }
-    std::this_thread::sleep_for(10ms);
-  }
-}
+bool Game::active() const { return active_; }
 
 void Game::reprint() {
   if (need_reprint_.glass) {
@@ -128,7 +83,7 @@ void Game::moveDown() {
   need_reprint_.figure = true;
   if (glued) {  // figure already spawned
     if (glass_.figure()->top() == 0 && glass_.figureIntersects()) {
-      status_ = Status::END;
+      active_ = false;
     }
   }
 }

@@ -5,7 +5,7 @@
 #include "game.h"
 
 void IInputController::startPolling() {
-  while (game_->status() != Game::Status::END) {
+  while (game_->active()) {
     auto key = getKey();
     if (key == Key::NOTHING) {
       continue;

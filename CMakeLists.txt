@@ -34,6 +34,8 @@ set(SRC
     gamefactory.cpp
     timer.h
     timer.cpp
+    gamestate.h
+    gamestate.cpp
 )
 
 if(WIN32)

@@ -8,10 +8,13 @@
 #include "iinputcontroller.h"
 #include "timer.h"
 
-class Game {
- public:
-  enum class Status { RUNNING, PAUSE, END };
+class GameState;
 
+class Game {
+  friend class RunningGameState;
+  friend class PausedGameState;
+
+ public:
   struct NeedReprint {
     bool glass = false, next_figure = false, figure = false;
   };
@@ -22,12 +25,14 @@ class Game {
 
   void start();
 
-  Status status() const;
   void parseInput(IInputController::Key key);
 
+  bool active() const;
+
  private:
+  std::shared_ptr<GameState> gamestate_;
   Glass glass_;
-  Status status_;
+  bool active_ = true;
   int score_;
   int speed_;
   std::shared_ptr<IDisplay> display_;
@@ -36,15 +41,17 @@ class Game {
   bool need_clear_rows_ = false;
   Timer speedup_timer_, movedown_timer_;
 
-  void runningLoop();
-  void pauseLoop();
-
   void reprint();
   void reprintAll();
   bool clearRows();
 
   void moveDown();
   void speedUp();
+
+  template <class T>
+  void setGamestate() {
+    gamestate_ = std::make_shared<T>(this);
+  }
 };
 
 #endif  // GAME_H
