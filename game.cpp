@@ -88,6 +88,4 @@ void Game::moveDown() {
   }
 }
 
-void Game::speedUp() {
-  movedown_timer_.setDuration(movedown_timer_.duration() * 9 / 10);
-}
+void Game::speedUp() { gamestate_->speedUp(); }

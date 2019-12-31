@@ -7,6 +7,8 @@ void GameState::parseInput(IInputController::Key key) {
   return doParseInput(key);
 }
 
+void GameState::speedUp() { return doSpeedUp(); }
+
 void GameState::defaultParseInput(IInputController::Key key) {
   if (key == IInputController::Key::QUIT) {
     game_->active_ = false;
@@ -45,6 +47,11 @@ void RunningGameState::doParseInput(IInputController::Key key) {
   game_->reprintIfNeeded();
 }
 
+void RunningGameState::doSpeedUp() {
+  game_->movedown_timer_.setDuration(game_->movedown_timer_.duration() * 9 /
+                                     10);
+}
+
 PausedGameState::PausedGameState(Game *game) : GameState(game) {}
 
 void PausedGameState::doParseInput(IInputController::Key key) {
@@ -58,3 +65,5 @@ void PausedGameState::doParseInput(IInputController::Key key) {
       break;
   }
 }
+
+void PausedGameState::doSpeedUp() {}
