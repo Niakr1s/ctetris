@@ -32,6 +32,8 @@ set(SRC
     platform_specific.h
     gamefactory.h
     gamefactory.cpp
+    timer.h
+    timer.cpp
 )
 
 if(WIN32)

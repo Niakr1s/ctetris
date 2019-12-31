@@ -12,7 +12,7 @@ class GameFactory {
     bool console_colored = false;
   };
 
-  static Game makeGame(const Settings &settings);
+  static Game *makeGame(const Settings &settings);
 
   static const int WIDTH, HEIGHT;
 

@@ -5,7 +5,7 @@
 #include "consolekeyboardcontroller.h"
 #include "cstring"
 
-Game GameFactory::makeGame(const Settings &settings) {
+Game* GameFactory::makeGame(const Settings& settings) {
   std::shared_ptr<IDisplay> display;
   if (settings.display.empty()) {
     display = defaultDisplay();
@@ -30,7 +30,7 @@ Game GameFactory::makeGame(const Settings &settings) {
     throw(std::invalid_argument("GameFactory::makeGame: wrong input"));
   }
 
-  Game game(display, input);
+  Game* game = new Game(display, input);
   return game;
 }
 

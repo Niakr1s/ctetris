@@ -6,15 +6,11 @@
 #include "consoledisplay.h"
 #include "glass.h"
 #include "iinputcontroller.h"
+#include "timer.h"
 
 class Game {
  public:
   enum class Status { RUNNING, PAUSE, END };
-
-  static const int SECOND;
-  static const int GAME_DEFAULT_SPEED;
-  static const int GAME_SPEED_AMPLIFY_INTERVAL;
-  static const double GAME_SPEED_AMPLIFY_MULTIPLIER;
 
   struct NeedReprint {
     bool glass = false, next_figure = false, figure = false;
@@ -24,12 +20,10 @@ class Game {
   Game(std::shared_ptr<IDisplay> display,
        std::shared_ptr<IInputController> input);
 
-  void loop();
+  void start();
 
   Status status() const;
   void parseInput(IInputController::Key key);
-
-  std::shared_ptr<IInputController> input() const;
 
  private:
   Glass glass_;
@@ -40,17 +34,17 @@ class Game {
   std::shared_ptr<IInputController> input_;
   NeedReprint need_reprint_;
   bool need_clear_rows_ = false;
+  Timer speedup_timer_, movedown_timer_;
 
-  void runningLoop(timeval& speed_amplify_time, timeval& move_down_time);
+  void runningLoop();
   void pauseLoop();
 
   void reprint();
-  void clearRows();
+  void reprintAll();
+  bool clearRows();
 
-  bool tryMoveDown(struct timeval* move_down_time = nullptr,
-                   struct timeval* current_time = nullptr);
-  bool trySpeedUp(struct timeval* speed_amplify_time,
-                  struct timeval* current_time);
+  void moveDown();
+  void speedUp();
 };
 
 long long timeMicroSeconds(struct timeval* time);

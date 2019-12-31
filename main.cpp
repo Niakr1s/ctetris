@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  Game game;
+  Game* game;
 
   try {
     game = GameFactory::makeGame(settings);
@@ -41,9 +41,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  game.input()->setGame(&game);
-  game.input()->startPolling();
-  game.loop();
+  game->start();
 
   return 0;
 }
