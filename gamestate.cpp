@@ -2,9 +2,20 @@
 
 GameState::GameState(Game *game) : game_(game) {}
 
+void GameState::parseInput(IInputController::Key key) {
+  defaultParseInput(key);
+  return doParseInput(key);
+}
+
+void GameState::defaultParseInput(IInputController::Key key) {
+  if (key == IInputController::Key::QUIT) {
+    game_->active_ = false;
+  }
+}
+
 RunningGameState::RunningGameState(Game *game) : GameState(game) {}
 
-void RunningGameState::parseInput(IInputController::Key key) {
+void RunningGameState::doParseInput(IInputController::Key key) {
   game_->display_->eraseFigure(game_->glass_.figure());
   game_->need_reprint_.figure = true;
   game_->need_reprint_.glass = true;
@@ -22,9 +33,6 @@ void RunningGameState::parseInput(IInputController::Key key) {
     case (IInputController::Key::ROTATE):
       game_->glass_.figureRotateN(1);
       break;
-    case (IInputController::Key::QUIT):
-      game_->active_ = false;
-      break;
     case (IInputController::Key::PAUSE):
       game_->setGamestate<PausedGameState>();
       break;
@@ -36,11 +44,8 @@ void RunningGameState::parseInput(IInputController::Key key) {
 
 PausedGameState::PausedGameState(Game *game) : GameState(game) {}
 
-void PausedGameState::parseInput(IInputController::Key key) {
+void PausedGameState::doParseInput(IInputController::Key key) {
   switch (key) {
-    case (IInputController::Key::QUIT):
-      game_->active_ = false;
-      break;
     case (IInputController::Key::PAUSE):
       game_->setGamestate<RunningGameState>();
       break;

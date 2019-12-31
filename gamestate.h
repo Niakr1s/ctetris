@@ -9,24 +9,27 @@ class GameState {
   GameState(Game* game);
   virtual ~GameState() {}
 
-  virtual void parseInput(IInputController::Key key) = 0;
+  void parseInput(IInputController::Key key);
 
  protected:
   Game* game_;
+
+  void defaultParseInput(IInputController::Key key);
+  virtual void doParseInput(IInputController::Key key) = 0;
 };
 
 class RunningGameState : public GameState {
  public:
   RunningGameState(Game* game);
 
-  void parseInput(IInputController::Key key) override;
+  void doParseInput(IInputController::Key key) override;
 };
 
 class PausedGameState : public GameState {
  public:
   PausedGameState(Game* game);
 
-  void parseInput(IInputController::Key key) override;
+  void doParseInput(IInputController::Key key) override;
 };
 
 #endif  // GAMESTATE_H

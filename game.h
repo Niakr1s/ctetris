@@ -11,6 +11,7 @@
 class GameState;
 
 class Game {
+  friend class GameState;
   friend class RunningGameState;
   friend class PausedGameState;
 
