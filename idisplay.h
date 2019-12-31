@@ -5,6 +5,10 @@
 
 class IDisplay {
  public:
+  virtual ~IDisplay() {}
+
+  virtual void exit() = 0;
+
   virtual void printGlass(const Glass& glass) = 0;
   virtual void printFigure(std::shared_ptr<IFigure> figure) = 0;
   virtual void eraseFigure(std::shared_ptr<IFigure> figure) = 0;

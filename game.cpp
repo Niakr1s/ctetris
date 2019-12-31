@@ -36,6 +36,7 @@ void Game::start() {
 
 void Game::quit() {
   reprintAll();
+  display_->exit();
   std::exit(1);
 }
 

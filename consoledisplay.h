@@ -12,6 +12,8 @@ class ConsoleDisplay : public IDisplay {
   ConsoleDisplay(int height, int width);
   ~ConsoleDisplay();
 
+  void exit() override;
+
   void printGlass(const Glass& glass) override;
   void printFigure(std::shared_ptr<IFigure> figure) override;
   void eraseFigure(std::shared_ptr<IFigure> figure) override;

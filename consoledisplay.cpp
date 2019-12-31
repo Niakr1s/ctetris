@@ -23,7 +23,9 @@ ConsoleDisplay::ConsoleDisplay(int height, int width)
   refresh();
 }
 
-ConsoleDisplay::~ConsoleDisplay() { endwin(); }
+ConsoleDisplay::~ConsoleDisplay() { exit(); }
+
+void ConsoleDisplay::exit() { endwin(); }
 
 void ConsoleDisplay::printGlass(const Glass& glass) {
   wclear(glass_win_);
