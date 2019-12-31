@@ -25,15 +25,13 @@ class Game {
        std::shared_ptr<IInputController> input);
 
   void start();
+  void quit();
 
   void parseInput(IInputController::Key key);
-
-  bool active() const;
 
  private:
   std::shared_ptr<GameState> gamestate_;
   Glass glass_;
-  bool active_ = true;
   int score_;
   int speed_;
   std::shared_ptr<IDisplay> display_;

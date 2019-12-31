@@ -11,7 +11,7 @@ void GameState::speedUp() { return doSpeedUp(); }
 
 void GameState::defaultParseInput(IInputController::Key key) {
   if (key == IInputController::Key::QUIT) {
-    game_->active_ = false;
+    game_->quit();
   }
 }
 

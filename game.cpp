@@ -34,11 +34,14 @@ void Game::start() {
   input_->startPolling();
 }
 
+void Game::quit() {
+  reprintAll();
+  std::exit(1);
+}
+
 void Game::parseInput(IInputController::Key key) {
   gamestate_->parseInput(key);
 }
-
-bool Game::active() const { return active_; }
 
 void Game::reprintIfNeeded() {
   if (need_reprint_.glass) {
@@ -83,7 +86,7 @@ void Game::moveDown() {
   need_reprint_.figure = true;
   if (glued) {  // figure already spawned
     if (glass_.figure()->top() == 0 && glass_.figureIntersects()) {
-      active_ = false;
+      quit();
     }
   }
 }
