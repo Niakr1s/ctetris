@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include <cstring>
+
 ConsoleDisplay::ConsoleDisplay(int height, int width)
     : height_(height),
       width_(width),
@@ -66,6 +68,14 @@ void ConsoleDisplay::printNextFigure(std::shared_ptr<IFigure> next_figure) {
   wrefresh(next_figure_win_);
 }
 
+void ConsoleDisplay::showPauseMenu() {
+  int x = width_ / 2 - std::strlen(PAUSED_TEXT) / 2;
+  mvwaddstr(glass_win_, 5, x, PAUSED_TEXT);
+  wrefresh(glass_win_);
+}
+
+void ConsoleDisplay::hidePauseMenu() {}
+
 int ConsoleDisplay::height() const { return height_; }
 
 int ConsoleDisplay::width() const { return width_; }
@@ -109,3 +119,4 @@ const int ConsoleDisplay::WIN_NEXT_FIGURE_WIDTH = WIN_INFO_WIDTH;
 const int ConsoleDisplay::WIN_NEXT_FIGURE_HEIGHT = 6;
 const int ConsoleDisplay::WIN_NEXT_FIGURE_Y =
     WIN_INFO_Y + WIN_INFO_HEIGHT + BORDER_THICKNESS * 3;
+const char* ConsoleDisplay::PAUSED_TEXT = "PAUSED";

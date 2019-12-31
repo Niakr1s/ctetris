@@ -11,6 +11,9 @@ class IDisplay {
   virtual void printScore(int score) = 0;
   virtual void printNextFigure(std::shared_ptr<IFigure> next_figure) = 0;
 
+  virtual void showPauseMenu() = 0;
+  virtual void hidePauseMenu() = 0;
+
   virtual int height() const = 0;
   virtual int width() const = 0;
 };

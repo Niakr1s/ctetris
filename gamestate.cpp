@@ -34,7 +34,10 @@ void RunningGameState::doParseInput(IInputController::Key key) {
       game_->glass_.figureRotateN(1);
       break;
     case (IInputController::Key::PAUSE):
+      game_->display_->showPauseMenu();
       game_->setGamestate<PausedGameState>();
+      game_->need_reprint_.figure = false;
+      game_->need_reprint_.glass = false;
       break;
     default:
       break;
@@ -47,6 +50,8 @@ PausedGameState::PausedGameState(Game *game) : GameState(game) {}
 void PausedGameState::doParseInput(IInputController::Key key) {
   switch (key) {
     case (IInputController::Key::PAUSE):
+      game_->display_->hidePauseMenu();
+      game_->reprintAll();
       game_->setGamestate<RunningGameState>();
       break;
     default:

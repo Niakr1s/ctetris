@@ -1,6 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#include <string>
+
 #include "glass.h"
 #include "idisplay.h"
 #include "platform_specific.h"
@@ -15,6 +17,8 @@ class ConsoleDisplay : public IDisplay {
   void eraseFigure(std::shared_ptr<IFigure> figure) override;
   void printScore(int score) override;
   void printNextFigure(std::shared_ptr<IFigure> next_figure) override;
+  void showPauseMenu() override;
+  void hidePauseMenu() override;
 
   int height() const override;
   int width() const override;
@@ -38,6 +42,7 @@ class ConsoleDisplay : public IDisplay {
   static const int WIN_NEXT_FIGURE_WIDTH;
   static const int WIN_NEXT_FIGURE_HEIGHT;
   static const int WIN_NEXT_FIGURE_Y;
+  static const char* PAUSED_TEXT;
 };
 
 #endif  // DISPLAY_H
