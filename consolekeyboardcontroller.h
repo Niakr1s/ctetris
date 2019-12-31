@@ -5,7 +5,7 @@
 
 class ConsoleKeyboardController : public IInputController {
  public:
-  ConsoleKeyboardController();
+  ConsoleKeyboardController(Game *game = nullptr);
 
   Key getKey() override;
 };

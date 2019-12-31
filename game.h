@@ -26,6 +26,11 @@ class Game {
 
   void loop();
 
+  Status status() const;
+  void parseInput(IInputController::Key key);
+
+  std::shared_ptr<IInputController> input() const;
+
  private:
   Glass glass_;
   Status status_;
@@ -36,7 +41,6 @@ class Game {
   NeedReprint need_reprint_;
   bool need_clear_rows_ = false;
 
-  void parseInput();
   void runningLoop(timeval& speed_amplify_time, timeval& move_down_time);
   void pauseLoop();
 

@@ -41,6 +41,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  game.input()->setGame(&game);
+  game.input()->startPolling();
   game.loop();
 
   return 0;

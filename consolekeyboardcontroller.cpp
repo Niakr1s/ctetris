@@ -2,10 +2,10 @@
 
 #include "platform_specific.h"
 
-ConsoleKeyboardController::ConsoleKeyboardController() {
+ConsoleKeyboardController::ConsoleKeyboardController(Game* game)
+    : IInputController(game) {
   initscr();
   keypad(stdscr, TRUE);
-  nodelay(stdscr, TRUE);
 }
 
 IInputController::Key ConsoleKeyboardController::getKey() {

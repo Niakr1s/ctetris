@@ -20,7 +20,9 @@ Game::Game(std::shared_ptr<IDisplay> display,
       score_(0),
       speed_(GAME_DEFAULT_SPEED),
       display_(display),
-      input_(input) {}
+      input_(input) {
+  input_->setGame(this);
+}
 
 void Game::loop() {
   display_->printGlass(glass_);
@@ -41,8 +43,9 @@ void Game::loop() {
   }
 }
 
-void Game::parseInput() {
-  auto key = input_->getKey();
+Game::Status Game::status() const { return status_; }
+
+void Game::parseInput(IInputController::Key key) {
   if (key != IInputController::Key::NOTHING) {
     display_->eraseFigure(glass_.figure());
     need_reprint_.figure = true;
@@ -72,6 +75,8 @@ void Game::parseInput() {
   }
 }
 
+std::shared_ptr<IInputController> Game::input() const { return input_; }
+
 void Game::runningLoop(struct timeval& speed_amplify_time,
                        struct timeval& move_down_time) {
   if (glass_.figure()->top() == 0 && glass_.figureIntersects()) {
@@ -85,7 +90,7 @@ void Game::runningLoop(struct timeval& speed_amplify_time,
   tryMoveDown(&move_down_time, &current_time);
   trySpeedUp(&speed_amplify_time, &current_time);
 
-  parseInput();
+  //  parseInput();
 
   clearRows();
   reprint();
